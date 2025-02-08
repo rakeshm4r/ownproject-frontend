@@ -1,0 +1,57 @@
+.product-container {
+  padding: 15px; /* Padding for the whole container */
+  border: 1px solid #ddd; /* Border around the whole product container */
+  margin-bottom: 15px; /* Margin between product containers */
+  border-radius: 8px; /* Rounded corners for the container */
+  background-color: #f9f9f9; /* Light background color */
+}
+.product-container:hover {
+  border: #007bff; /* Button hover color */
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+}
+
+.product-card {
+  display: flex;
+  flex-wrap: wrap; /* Ensure items wrap properly on smaller screens */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center; /* Horizontally center the image */
+  align-items: flex-end; /* Vertically align image to the bottom */
+  padding-right: 10px; /* Space between image and text */
+}
+
+.text-container {
+  padding-left: 10px; /* Space between image and text */
+}
+
+h3 {
+  margin-top: 0; /* Remove margin on top of the heading */
+}
+
+.button-icon {
+  width: 20px; /* Set width for the icon */
+  height: 20px; /* Set height for the icon */
+  margin: 0px 20px; /* Space between the icon and the text */
+}
+
+.buttons-container {
+  display: flex;
+  gap: 5px; /* Adjust the space between buttons */
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .col-md-4, .col-md-6 {
+    width: 100%; /* On small screens, make image and text take full width */
+  }
+  .image-container {
+    padding-right: 0; /* No space on small screens */
+    padding-bottom: 10px; /* Add space below the image */
+  }
+  .product-card {
+    flex-direction: column; /* Stack the image and text vertically on small screens */
+    align-items: center; /* Center align the items */
+  }
+}

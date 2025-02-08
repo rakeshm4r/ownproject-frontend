@@ -1,0 +1,86 @@
+
+
+<div style="float: right;padding-right: 20px;margin-top: 10px;">
+ <ul>
+  <li (click)="shareVia('export')">
+    <img src="assets/share.png" alt="Share" width="24" height="24" class="shareIcons" />
+    Export
+  </li>
+ </ul>
+</div>
+
+<div class="table-responsive ">
+  <h2>Users List</h2>
+ 
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Mobile No.</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Login Date</th>
+        <th>Change Role</th>
+        <th>Share</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" id="user-table-row-{{ user.userId }}">     
+        <td data-label="Name">{{ user.userName }}</td>
+        <td data-label="Email">{{ user.emailId }}</td>
+        <td data-label="Role">{{ user.userRole }}</td>
+        <td data-label="Mobile No.">{{ user.mobileNo }}</td>
+        <td data-label="Address">{{ user.address }}</td>
+        <td data-label="City">{{ user.city }}</td>
+        <td data-label="State">{{ user.state }}</td>
+        <td data-label="Country">{{ user.country }}</td>
+        <td data-label="Login Date">{{ user.userLoginDate | date:'dd-MM-yyyy' }}</td>
+        <td data-label="Action" >
+          <button (click)="openRoleChangePopup(user)" class="share-button">
+            <span class="material-symbols-outlined">edit_square</span>
+          </button>
+        </td>
+        <td data-label="Share" >
+          <button (click)="toggleDropdown(user)" class="share-button">
+            <span class="material-symbols-outlined"> share </span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p-dialog [(visible)]="isDropdownVisible" [modal]="true" [closable]="true" header="Share the {{ currentUser?.userName }} details via">
+  <p>Choose an option to share:</p>
+  <ul>
+    <li (click)="shareVia('whatsapp')">
+      <img src="assets/whatsapp_5968841.png" alt="WhatsApp" width="24" height="24" class="shareIcons" />
+      WhatsApp
+    </li>
+    <li (click)="shareVia('pdf')">
+      <img src="assets/pdf.png" alt="pdf" width="24" height="24" class="shareIcons" />
+      PDF 
+    </li>
+  </ul>
+</p-dialog>
+
+<!-- PrimeNG Dialog for Role Change -->
+<p-dialog header="Change Role for {{ selectedUser?.userName }}" [(visible)]="displayRoleChangeDialog"
+          [modal]="true" [responsive]="true" [closable]="true" [style]="{width: '400px', height: '300px'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <p-dropdown id="roleSelect" [options]="availableRoles" [(ngModel)]="selectedRole"  (onChange)="selectedRole=$event.value" placeholder="Select a Role"></p-dropdown>
+    </div>
+    <div class="button-container">
+      <button type="button" pButton icon="pi pi-check" label="Save" (click)="submitRoleChange()"></button>
+      <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="closeRoleChangeDialog()"></button>
+    </div>
+  </div>
+</p-dialog>
+
+
+

@@ -1,0 +1,64 @@
+/* image-carousel.component.css */
+.carousel {
+  width: 100%;
+  height: 30vh; /* Set height to 30% of the viewport height */
+  margin: auto;
+  overflow: hidden; /* Hide overflow to keep carousel neat */
+  position: relative; /* To position buttons */
+}
+
+.carousel-inner {
+  display: block;  
+  width: 100%;
+  height: 100%; /* Make sure inner container fills the height of carousel */
+}
+
+.carousel-image {
+  width: 100%; /* Ensure image covers the full width of the container */
+  height: 100%; /* Ensure image covers the full height of the container */
+}
+
+/* Initially hide the buttons */
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10; /* Make sure buttons stay above images */
+  opacity: 0; /* Buttons are hidden initially */
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+/* Show the buttons when hovering over the carousel */
+.carousel:hover button {
+  opacity: 1; /* Show the buttons when the carousel is hovered */  
+}
+
+
+button.carousel-control-prev {
+  left: 10px;color: black;
+}
+
+button.carousel-control-next {
+  right: 10px;color: black;
+}
+
+
+
+/* Media Query for Responsiveness */
+@media (max-width: 768px) {
+  .carousel {
+    height: 40vh; /* Increase height for tablets to give better image view */
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel {
+    height: 50vh; /* Increase height for phones to fit the image well */
+  }
+}
+

@@ -1,0 +1,19 @@
+.error-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.error-container h1 {
+  font-size: 48px;
+  color: #ff6b6b;
+}
+
+.error-container p {
+  font-size: 18px;
+  color: #777;
+}
+.error-container a {
+  display: block; /* Makes the link occupy the full area of the image */
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,150 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+.form-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.field-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.rk-btn {
+  width: 100%; 
+  display: inline-block;
+  align-items: center;
+  padding: 5px 10px;
+  border: none;
+  background-color: teal;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.rk-btn:disabled {
+  width: 100%; 
+  display: inline-block;
+  align-items: center;
+  padding: 5px 10px;
+  border: none;
+  background-color: grey;
+  color: white;
+  font-size: 14px;
+  cursor: not-allowed;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.rk-edit-btn{
+  width: 100%; 
+  color: black;
+  cursor: pointer;
+  border: none;
+}
+.button:disabled {
+  background-color: #ccc; /* Change the background color when disabled */
+  cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+}
+/* Make the action buttons inline */
+.action-buttons {
+  display: inline-flex;
+  gap: 8px; /* Adjust the space between buttons */
+  align-items: center;
+}
+
+.heading-buttons {
+  display: flex;
+  gap: 5px; /* Adjust the space between buttons */
+  align-items: center;
+}
+.save-buttons {
+  display: flex;
+  gap: 5px; /* Adjust the space between buttons */
+  align-items: center;
+}
+
+button .material-symbols-outlined {
+  margin-right: 5px; /* Space between icon and text */
+}
+
+
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+/* Container to align both left and right content side by side */
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Form container on the left */
+.form-container {
+  flex: 1; /* Takes up the remaining space */
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+/* Right-side card section */
+.right-column {
+  flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Optional: Styling for the p-card */
+.headingTags-card {
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Override PrimeNG p-card body padding and width */
+:host ::ng-deep .p-card .p-card-body {
+  padding: 2rem; /* Override padding */
+  width: max-content  ; /* Adjust the width as needed */
+  
+}
+
+.active-task {
+  color: green; /* Active color for task_alt icon */
+}
+
+.disabled-task {
+  color: red;  /* Disabled color */
+ 
+}
+
+

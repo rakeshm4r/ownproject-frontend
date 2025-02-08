@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="form-container mt-5 heading">
+    <h2>Add Heading Tags</h2>
+    <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+      <!-- Loop through all the fields in the form array -->
+      <div formArrayName="fields">
+        <div *ngFor="let field of fields.controls; let i = index" [formGroupName]="i" class="field-group">
+          
+          <!-- Editable header field -->
+          <label for="headerName{{i}}">Field Header {{i + 1}}</label>
+          <input id="headerName{{i}}" formControlName="headerName" placeholder="Enter field header" />
+
+          <!-- Editable input field -->
+          <div *ngIf="field.get('headerName')?.invalid && field.get('headerName')?.touched" class="error">
+            Field Header Name is required
+          </div>
+        </div>
+      </div>
+      <span class="heading-buttons">
+      <!-- Button to add more fields -->
+      <button type="button" class="rk-btn" (click)="addField()">Add More Fields</button>
+      
+      <!-- Submit button -->
+      <button type="submit" class="rk-btn" [disabled]="dynamicForm.invalid">Submit</button>
+      </span>
+    </form>
+  </div>
+
+ 
+<div class="right-column mt-5">
+  <div *ngIf="!headingTags || headingTags.length === 0">
+    <p>Loading Heading Tags...</p>
+  </div>
+
+  <p-card *ngIf="headingTags && headingTags.length > 0"  styleClass="headingTags-card">
+    <h2>Available Heading Tags</h2>
+    <div class="headingTags-details">
+      <div *ngFor="let tag of headingTags; let i = index">
+        <!-- Read Mode -->
+        <div *ngIf="!tag.isEditMode">
+          <p><strong>Field Header:</strong> {{ tag.headerName }}
+            <!-- Use span to align the icons horizontally -->
+            <span class="action-buttons"  >
+              <button (click)="editTag(i)" class="rk-edit-btn">
+                <span class="material-symbols-outlined">edit_square</span> 
+              </button>
+              <!-- <button (click)="deleteTag(i)"  >
+                <span class="material-symbols-outlined">delete</span> 
+              </button> -->
+              <button (click)="activateTag(i)"   class="rk-edit-btn"
+              [ngClass]="{'active-task': tag.headerStatus === '1', 'disabled-task': tag.headerStatus === '0'}">
+                <span class="material-symbols-outlined">task_alt</span>
+              </button>
+      
+            </span>
+            
+          </p>
+        </div>
+        
+        
+        <!-- Edit Mode -->
+        <div *ngIf="tag.isEditMode">
+          <p><strong>Field Header:</strong>
+            <input [(ngModel)]="tag.headerName" placeholder="Edit field header">
+          </p>
+          <span class="save-buttons">
+            <button (click)="saveTag(i)"  class="rk-btn">Save</button>
+            <button (click)="cancelEdit(i)"  class="rk-btn">Cancel</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>
+
+

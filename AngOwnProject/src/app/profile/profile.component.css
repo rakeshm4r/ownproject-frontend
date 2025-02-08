@@ -1,0 +1,37 @@
+
+/* :host ::ng-deep .p-element ng-star-inserted  {
+  padding: 2rem;
+  width: max-content  ; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: black;
+  justify-content: center;
+  display: flex;
+
+} */
+
+.profile-image-container {
+  
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 120px;         /* Adjust the image size */
+  height: 120px;        /* Ensure it's a square */
+  border-radius: 50%;   /* Make the image round */
+  object-fit: cover;    /* Ensure the image maintains its aspect ratio */
+  border: 3px solid #f0f0f0;  /* Optional: Add a border around the image */
+}
+
+.profile-details p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.profile-details strong {
+  font-weight: bold;
+}
+
+.profile-details {
+  padding-left: 15px; /* Add some left padding to the text */
+}

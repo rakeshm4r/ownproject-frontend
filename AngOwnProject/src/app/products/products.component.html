@@ -1,0 +1,19 @@
+<div class="Search">
+  <input type="text" [(ngModel)]="searchQuery" placeholder="Search Products" (input)="filterProducts()" />
+</div>
+
+
+
+<div class="product-container">
+  <div class="product-card" *ngFor="let product of filteredProducts">
+    <div class="image-container">
+      <img [src]="'data:image/webp;base64,' + product.productImageBase64"
+           alt="{{ product.productName }} image" width="100%" height="100">
+    </div>
+    <h3>{{ product.productName }}</h3>
+    <p>Price: ₹{{ product.productPrice }}</p>
+    <p *ngIf="product.noOfItems !== null && product.noOfItems !== undefined">Items: {{ product.noOfItems }}</p>
+    <p *ngIf="product.categoryName !== null && product.categoryName !== undefined">Category: {{ product.categoryName }}</p>
+    <button  class="rk-btn" (click)="onProductClick(product)">Click to Add</button>
+  </div>
+</div>

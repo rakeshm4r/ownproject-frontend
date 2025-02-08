@@ -1,0 +1,32 @@
+.navbar-nav {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.nav-item {
+  margin-right: 15px; /* Optional: Add space between items */
+}
+
+.nav-link {
+  text-decoration: none; /* Remove underline from links */
+}
+
+.nav-link.active {
+  font-weight: bold; /* Make active link bold */
+  text-decoration: underline; /* Underline active link */
+}
+/* Custom CSS for the dropdown menu */
+/* Hide the dropdown icon */
+.nav-item .dropdown-toggle::after {
+  display: none; /* This will hide the dropdown icon */
+}
+
+.custom-teal-bg {
+  background-color: #00675b; /* Dark Teal color */
+}
+.dropdown-item{
+  display: inline-flex;
+  gap: 10px;
+}
+

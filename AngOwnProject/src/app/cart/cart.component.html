@@ -1,0 +1,47 @@
+<div class="col-12 container-fluid">
+  <div class="row">
+    <div class="col-1">
+
+    </div>
+   
+    <div class="col-8">
+      <div class="row" style="margin: 20px 20px;">
+        <div class="product-container" >
+          <div *ngIf="isCartEmpty; else cartList">
+            <p>Your cart is empty.</p>
+          </div>
+          
+          <ng-template #cartList>
+          <div class="product-card" *ngFor="let product of cartDetails">
+            <div class="col-12 col-md-4">
+              <div class="image-container">
+                <img [src]="'data:image/webp;base64,' + product.productImageBase64"
+                  alt="{{ product.productName }} image" width="100%" height="auto">
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="text-container">
+                <h3>{{ product.productName }}</h3>
+                <p>Price: ₹{{ product.productPrice }}</p>                             
+                <div class="buttons-container">
+                <button class="rk-btn" (click)="removeProduct(product.cartId)">Remove
+                 
+                  <img src="assets/cart-shopping-fast.png" alt="Cart Icon" class="button-icon">
+                </button>               
+              </div>
+              </div>
+            </div>
+          </div>
+          </ng-template>
+        </div>
+      </div>  
+    </div>
+    <div class="col-3">
+      <div class="row" style="margin: 20px 20px;">
+      <div *ngIf="cartDetails.length > 0" class="total-price-container">
+        <h4>Total Items: {{ cartDetails.length }}</h4>
+        <h4>Total Price: ₹{{ getTotalPrice() }}</h4>
+      </div>
+    </div>
+    </div>
+</div>

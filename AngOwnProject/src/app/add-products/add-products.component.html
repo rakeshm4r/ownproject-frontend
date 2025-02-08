@@ -1,0 +1,142 @@
+
+
+
+<div class="col-12" style="margin-top: 10px;">
+  <div class="row">
+    <div class="col-9 Search">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search Products" (input)="filterProducts()" />
+    </div>
+    <div class="col-3">
+      <div class="showedPrds">
+        <button (click)="showPopupCategory()" class="rk-btn">Add Category</button>
+        <button (click)="showProductsForm()" class="rk-btn">Add Products</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-products (productClicked)="handleProductClicked($event)"></app-products> -->
+
+
+<div class="container  form-card" *ngIf="showPrdsForm" style="margin-top: 68px;">
+  <div style="display: flex;justify-content: center;" >
+    <h2>Add Products</h2>
+ </div>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="mt-4 ">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="productImage">Product Image</label>
+        <input id="productImage" formControlName="productImage" type="file" class="form-control" (change)="onFileChange($event)" />
+      </div>
+      <!-- Image Preview Section -->
+      <div class="col-md-6 form-group" *ngIf="imageBase64">
+        <label>Image Preview</label>
+        <img [src]="imageBase64" alt="Selected Image" class="img-fluid" style="max-width: 100%; height: 100px;"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="productName">Product Name</label>
+        <input id="productName" formControlName="productName" type="text" class="form-control" />
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label for="productPrice">Product Price</label>
+        <input id="productPrice" formControlName="productPrice" type="number" class="form-control" />
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label for="noOfItems">Number of Items</label>
+        <input id="noOfItems" formControlName="noOfItems" type="number" class="form-control" />
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label for="category">Category</label>
+        <p-dropdown id="category" [options]="categories" formControlName="category" 
+          optionLabel="productCategoryName" placeholder="Select Category" class="form-control">
+        </p-dropdown>
+      </div>
+
+      <div class="">
+      <div class="button-container">
+        <button type="submit" class="rk-btn" [disabled]="productForm.invalid">Submit</button>
+        <button type="button" class="rk-btn" (click)="resetProductForm()">Cancel</button>
+      </div>
+    </div>
+    </div>
+  </form>
+
+</div>
+
+
+<p-dialog header="Add Category" [(visible)]="showCategory" [modal]="true" [responsive]="true" [closable]="true"
+  [style]="{width: '400px', height: '300px'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <form [formGroup]="productCategory">
+        <label for="categoryName">Category</label>
+        <input id="categoryName" formControlName="productCategoryName" placeholder="Enter category name" pInputText />
+      </form>
+    </div>
+    <div class="button-container">
+      <button type="button" (click)="addCategory()" class="rk-btn" [disabled]="productCategory.invalid">Save</button>
+      <button type="button" (click)="closeCategroy()" class="rk-btn">Cancel</button>
+    </div>
+  </div>
+</p-dialog> 
+
+
+
+<div class="product-container">
+  <div class="product-card" *ngFor="let product of filteredProducts">
+    <div class="edit-icon" *ngIf="!product.isEditing">
+      <img src="assets/edit.png" alt="Edit" width="20" height="20" (click)="startEditing(product)"/>
+    </div>
+    <div class="image-container">
+      <img [src]="'data:image/webp;base64,' + product.productImageBase64"
+           alt="{{ product.productName }} image" width="100%" height="100">
+    </div>
+
+    <div *ngIf="!product.isEditing">
+        <h3>{{ product.productName }}</h3>
+        <p>Price: ₹{{ product.productPrice }}</p>
+    <p >Items: {{ product.noOfItems }}</p>
+    <p >Category: {{ product.categoryName }}</p> 
+
+    </div>
+    <div *ngIf="product.isEditing">
+      <div class="input-group">
+        <label for="productName">Product Name</label>
+        <input id="productName" type="text" [(ngModel)]="product.productName" />
+      </div>
+    
+      <div class="input-group">
+        <label for="productPrice">Product Price</label>
+        <input id="productPrice" type="number" [(ngModel)]="product.productPrice"/>
+      </div>
+    
+      <div class="input-group">
+        <label for="noOfItems">Number of Items</label>
+        <input id="noOfItems" type="number" [(ngModel)]="product.noOfItems"/>
+      </div>
+    
+      <div class="input-group">
+        <label for="category">Category</label>
+        <input id="category" type="text" [(ngModel)]="product.categoryName" />
+      </div>
+    </div>
+    
+    <div  class="button-container" *ngIf="product.isEditing" style="margin:0 !important">
+      <button class="rk-btn" (click)="saveChanges(product)">Save</button>
+      <button class="rk-btn" (click)="cancelEdit(product)">Cancel</button>
+    </div> 
+
+  </div>
+</div>
+
+
+
+
+
+
+

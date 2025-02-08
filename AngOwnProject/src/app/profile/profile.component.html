@@ -1,0 +1,29 @@
+
+
+<p-card *ngIf="userProfile" header="User Profile" style="display: flex; justify-content: center; align-items: center; width: 100%; margin: 0 auto;" >
+  <!-- Profile Image -->
+  <div class="profile-image-container">
+    <img *ngIf="userProfile.profileImage" [src]="userProfile.profileImage" alt="Profile Image" class="profile-image"/>
+    <!-- Fallback to a default image if profileImage is null -->
+    <img *ngIf="!userProfile.profileImage" src="assets/images/krishna.png" alt="Default Profile Image" class="profile-image"/>
+  </div>
+  
+  <!-- Profile Information -->
+  <div class="profile-details">
+    <p><strong>User ID:</strong> {{ userProfile.userId }}</p>
+    <p><strong>Username:</strong> {{ userProfile.userName }}</p>
+    <p><strong>Email:</strong> {{ userProfile.emailId }}</p>
+    <p><strong>Role:</strong> {{ userProfile.userRole }}</p>
+    <p><strong>Status:</strong> {{ userProfile.userStatus == 0 ? 'Active' : 'Not Active' }}</p>
+    <p><strong>Mobile No:</strong> {{ userProfile.mobileNo }}</p>
+    <p><strong>Address:</strong> {{ userProfile.address }}</p>
+    <p><strong>City:</strong> {{ userProfile.city }}</p>
+    <p><strong>State:</strong> {{ userProfile.state }}</p>
+    <p><strong>Pin Code:</strong> {{ userProfile.pinCode }}</p>
+    <p><strong>Country:</strong> {{ userProfile.country }}</p>
+  </div>
+</p-card>
+
+<div *ngIf="!userProfile">
+  <p>Loading user profile...</p>
+</div>

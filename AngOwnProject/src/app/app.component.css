@@ -1,0 +1,18 @@
+html, body {
+  height: 100%; /* Full height for body */
+  margin: 0; /* Remove default margin */
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+.content {
+  flex: 1; /* Allow content to grow and fill available space */
+  display: flex; /* Ensure that the content area can also use flexbox if needed */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically, if needed */
+}
+

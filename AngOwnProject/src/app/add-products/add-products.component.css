@@ -1,0 +1,93 @@
+/* Custom CSS for p-dropdown */
+p-dropdown.form-control {
+  border: none;
+  /* Removes the border */
+  padding: 0;
+  display: inline-grid
+}
+
+.showedPrds {
+  display: inline-flex;
+  float: inline-end;
+  gap: 10px;
+  padding-right: 5px;
+}
+
+.shwdPrds {
+  display: inline;
+  float: inline-end;
+  margin-top: 10px;
+}
+
+
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+  background-color: #fff;
+}
+
+
+
+.product-card img {
+  border-radius: 8px;
+}
+
+.product-card h3 {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+}
+
+.product-card p {
+  margin: 4px 0;
+  font-size: 1em;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+.Search{
+  display: flex;
+  justify-content: center;
+}
+.Search input{
+  width: 50%;
+  height: 50px;
+}
+
+.edit-icon{
+  display: flex;
+  float: right;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.edit-icon img{
+  border-radius:0 !important;
+}
+
+.input-group input {
+  display: flex;
+  align-items: center; /* Aligns the label and input vertically */
+  margin-bottom: 10px;  /* Adds some space between the rows */
+}
+
+.input-group label {
+  margin-right: 10px; /* Space between label and input */
+}
+
+.input-group input {
+  flex-grow: 1; /* Input takes the remaining space */
+}

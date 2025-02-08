@@ -1,0 +1,49 @@
+
+
+
+<div class="col-12 container-fluid">
+  <div class="row">
+    <div class="col-2" style="border-right: 2px solid #000;">
+      <div class="filters">
+        <h3>Filters</h3>
+        <button>Filter 1</button>
+        <button>Filter 2</button>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="row" style="margin: 20px 20px;">
+        <div class="product-container" *ngIf="selectedProduct">
+          <div class="product-card" *ngFor="let product of products">
+            <div class="col-12 col-md-4">
+              <div class="image-container">
+                <img [src]="'data:image/webp;base64,' + product.productImageBase64"
+                  alt="{{ product.productName }} image" width="100%" height="auto">
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="text-container">
+                <h3>{{ product.productName }}</h3>
+                <p>Price: ₹{{ product.productPrice }}</p>
+                <p *ngIf="product.noOfItems !== null && product.noOfItems !== undefined">Items: {{ product.noOfItems }}</p>
+                <p *ngIf="product.categoryName !== null && product.categoryName !== undefined">Category: {{ product.categoryName }}</p>             
+                <div class="buttons-container">
+                <button class="rk-btn" (click)="showBuyNow ? buyNow(product) : onProductClick(product)">
+                  {{ showBuyNow ? 'Buy Now' : 'Add to Cart' }}
+                  <img src="assets/cart-shopping-fast.png" alt="Cart Icon" class="button-icon">
+                </button>
+                <button class="rk-btn" routerLink="/showCart" *ngIf="showBuyNow">Go to Cart</button>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="row">
+        <app-products (productClicked)="handleProductClicked($event)"></app-products>
+      </div>
+    </div>
+
+  </div>
+</div>

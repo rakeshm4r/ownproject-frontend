@@ -1,0 +1,23 @@
+<div
+  class="context-menu"
+  [style.left.px]="xPos"
+  [style.top.px]="yPos"
+  *ngIf="menuItems.length > 0"
+>
+  <ul>
+    <!-- <li *ngFor="let item of menuItems" (click)="onMenuItemClick(item)">
+      {{ item }}
+    </li> -->
+    <li *ngFor="let item of menuItems" (click)="onMenuItemClick(item)" class="menu-item">
+      
+      <span *ngIf="item === 'Refresh'" class="material-symbols-outlined">
+        refresh
+      </span>
+      <span *ngIf="item === 'LogOut'" class="material-symbols-outlined">
+        logout
+      </span>
+      {{ item }}
+    </li>
+  </ul>
+</div>
+

@@ -1,0 +1,116 @@
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="home">
+      <img src="assets/Brand_Logo/mrk-1.webp" alt="YourBrand Logo" width="50" height="50">
+    </a>
+
+
+    <!-- Toggler button for mobile view -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <!-- Dynamic Menu Items based on Tags -->
+        <ng-container *ngFor="let tag of headingTags">
+          <li *ngIf="tag.headerStatus == '1' && tag.headerName !== 'Cart'" class="nav-item"
+            style="display: inline-block;">
+            <a [routerLink]="generateRouteLink(tag.headerName)" routerLinkActive="active" class="nav-link">
+              {{ tag.headerName }}
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+
+
+      <!-- Dropdown for Profile/Settings/Login based on User Role -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown" *ngIf="!isAdmin">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Profile
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">
+                <img src="assets/user.png" alt="User Info" style="width: 20px; height: 20px; margin-right: 8px;">
+                User Info
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/showCart" routerLinkActive="active">
+                <img src="assets/cart-shopping-fast.png" alt="show Carts"
+                  style="width: 20px; height: 20px; margin-right: 8px;">
+                Cart
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/settings" routerLinkActive="active">
+                <img src="assets/settings.png" alt="Settings" style="width: 20px; height: 20px; margin-right: 8px;">
+                Settings
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><button class="dropdown-item" (click)="logOut()">
+                <span class="material-symbols-outlined" style="width: 20px; height: 20px;">logout</span>
+                Log Out
+              </button></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown" *ngIf="isAdmin">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Admin
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">
+                <img src="assets/user.png" alt="User Info" style="width: 20px; height: 20px; margin-right: 8px;">
+                User Info
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/control-setting" routerLinkActive="active">
+                <img src="assets/user-gear.png" alt="Admin" style="width: 20px; height: 20px; margin-right: 8px;">
+                Admin
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/showCart" routerLinkActive="active">
+                <img src="assets/cart-shopping-fast.png" alt="Admin"
+                  style="width: 20px; height: 20px; margin-right: 8px;">
+                Cart
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <button class="dropdown-item" (click)="logOut()">
+                <span class="material-symbols-outlined" style="width: 20px; height: 20px;">logout</span>
+                Log Out
+              </button>
+            </li>
+
+          </ul>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+  <li><a class="dropdown-item" routerLink="/profile" routerLinkActive="active">User Info</a></li>
+  <li><a class="dropdown-item" routerLink="/control-setting" routerLinkActive="active">Admin</a></li>
+  <li><hr class="dropdown-divider"></li>
+  <li><button class="dropdown-item" (click)="logOut()">Log Out</button></li>
+</ul> -->

@@ -1,0 +1,29 @@
+<p-toast></p-toast>
+
+<!-- <div class="wrapper">
+  <app-home-header></app-home-header> 
+
+  <div class="content">
+      
+      <router-outlet></router-outlet>
+  </div>
+
+  <app-home-footer></app-home-footer>
+</div> -->
+
+<!-- This is where the router-outlet is for routing -->
+<!-- The router-outlet where routed components will be displayed -->
+<router-outlet></router-outlet>
+
+<!-- Main content of the page that will listen for right-click events -->
+<div (contextmenu)="onRightClick($event)" (click)="onClickOutside($event)">
+  <!-- Custom context menu, position it at the mouse coordinates -->
+  <app-context-menu
+    *ngIf="isMenuVisible"
+    [xPos]="mouseX"
+    [yPos]="mouseY"
+    (actionClicked)="onActionClicked($event)"
+  ></app-context-menu>
+</div>
+
+
