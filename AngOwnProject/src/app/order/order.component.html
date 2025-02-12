@@ -8,14 +8,14 @@
       <div class="profile-details">
         <h3>Address</h3>
         
-          <p><strong>Username:</strong> {{ userProfile.userName }}</p>
-          <p><strong>Email:</strong> {{ userProfile.emailId }}</p>
-          <p><strong>Mobile No:</strong> {{ userProfile.mobileNo }}</p>
-          <p><strong>Address:</strong> {{ userProfile.address }}</p>
-          <p><strong>City:</strong> {{ userProfile.city }}</p>
-          <p><strong>State:</strong> {{ userProfile.state }}</p>
-          <p><strong>Pin Code:</strong> {{ userProfile.pinCode }}</p>
-          <p><strong>Country:</strong> {{ userProfile.country }}</p>
+          <p><strong>Username:</strong> {{ userProfile?.userName }}</p>
+          <p><strong>Email:</strong> {{ userProfile?.emailId }}</p>
+          <p><strong>Mobile No:</strong> {{ userProfile?.mobileNo }}</p>
+          <p><strong>Address:</strong> {{ userProfile?.address }}</p>
+          <p><strong>City:</strong> {{ userProfile?.city }}</p>
+          <p><strong>State:</strong> {{ userProfile?.state }}</p>
+          <p><strong>Pin Code:</strong> {{ userProfile?.pinCode }}</p>
+          <p><strong>Country:</strong> {{ userProfile?.country }}</p>
      
       </div>
     </div>
@@ -33,7 +33,7 @@
               <div class="text-container">
                 <h3>{{ product.productName }}</h3>
                 <p>Price: ₹{{ product.productPrice }}</p>
-                <button (click)="pay(500,product.productId)">Pay ₹500</button>              
+                <button (click)="pay(product.productPrice,product.productId,userProfile)">₹{{ product.productPrice }}</button>              
               </div>
             </div>
           </div>
