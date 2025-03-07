@@ -43,7 +43,6 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { DeliveryHomeComponent } from './delivery-home/delivery-home.component';
 import { CalendarModule } from 'primeng/calendar';
-import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -74,7 +73,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     BrowserModule,ReactiveFormsModule , HttpClientModule ,FormsModule,CardModule,
     AppRoutingModule,ToastModule,ButtonModule,BrowserAnimationsModule,InputTextModule,
     DialogModule,ProgressBarModule,ProgressSpinnerModule,SplitterModule,CarouselModule,
-    DropdownModule,CalendarModule,MatTabsModule,
+    DropdownModule,CalendarModule,
   ],
   providers: [MessageService,
                         { provide: HTTP_INTERCEPTORS,    useClass: AuthInterceptorService,    multi: true  }
