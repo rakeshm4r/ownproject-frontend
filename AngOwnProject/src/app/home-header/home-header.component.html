@@ -1,9 +1,16 @@
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="home">
-      <img src="assets/Brand_Logo/mrk-1.webp" alt="YourBrand Logo" width="50" height="50">
-    </a>
-
+ 
+    <ng-container  *ngIf="!isDeliveryBoy; else outOfStock">
+      <a class="navbar-brand" routerLink="home">
+        <img src="assets/Brand_Logo/mrk-1.webp" alt="YourBrand Logo" width="50" height="50">
+      </a>
+    </ng-container>
+    <ng-template #outOfStock>
+      <a class="navbar-brand" routerLink="delivery-home">
+        <img src="assets/Brand_Logo/mrk-1.webp" alt="YourBrand Logo" width="50" height="50">
+      </a>
+    </ng-template>
 
     <!-- Toggler button for mobile view -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -47,6 +54,13 @@
               </a>
             </li>
             <li>
+              <a class="dropdown-item" routerLink="/my-orders" routerLinkActive="active">
+                <img src="assets/myorders.png" alt="show Carts"
+                  style="width: 20px; height: 20px; margin-right: 8px;">
+                My Orders
+              </a>
+            </li>
+            <li>
               <a class="dropdown-item" routerLink="/settings" routerLinkActive="active">
                 <img src="assets/settings.png" alt="Settings" style="width: 20px; height: 20px; margin-right: 8px;">
                 Settings
@@ -87,6 +101,27 @@
                 <img src="assets/cart-shopping-fast.png" alt="Admin"
                   style="width: 20px; height: 20px; margin-right: 8px;">
                 Cart
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/my-orders" routerLinkActive="active">
+                <img src="assets/myorders.png" alt="show Carts"
+                  style="width: 20px; height: 20px; margin-right: 8px;">
+                My Orders 
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/adminorders" routerLinkActive="active">
+                <img src="assets/delivery-service.png" alt="show Carts"
+                  style="width: 20px; height: 20px; margin-right: 8px;">
+                  User Orders
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/delivery-home" routerLinkActive="active">
+                <img src="assets/delivery-man.png" alt="show Carts"
+                  style="width: 20px; height: 20px; margin-right: 8px;">
+                  Delivery-Partner
               </a>
             </li>
             <li>

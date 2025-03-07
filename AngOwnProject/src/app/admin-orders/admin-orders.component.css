@@ -1,0 +1,122 @@
+
+  /* Style the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style the table header */
+  th {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  /* Style the table data */
+  td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* Hover effect for table rows */
+  tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  /* Make the table responsive */
+  @media screen and (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+
+    /* Remove the table header styling */
+    thead {
+      display: none;
+    }
+
+    /* Add padding to the rows for readability */
+    tr {
+      margin-bottom: 10px;
+      border: 1px solid #0b0b0b;
+    }
+
+    /* Each cell should take up the entire width */
+    td {
+      display: block;
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+    }
+
+    td::before {
+      /* Label each cell with the header name */
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    td:nth-of-type(1)::before { content: 'Order Number'; }
+    td:nth-of-type(2)::before { content: 'Product Name'; }
+    td:nth-of-type(3)::before { content: 'Payment Amount'; }
+    td:nth-of-type(4)::before { content: 'Payment Status'; }   
+    td:nth-of-type(5)::before { content: 'Booked Date'; }
+    td:nth-of-type(6)::before { content: 'Delivered Date'; }
+    td:nth-of-type(7)::before { content: 'Payment Type'; }
+    
+  }
+
+  h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  ul {
+    list-style-type: none; /* Removes the dots from the list */
+    padding: 0; /* Removes the default padding */
+    margin: 0; /* Removes the default margin */
+  }
+
+  /* Style each list item */
+  li {
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer; /* Makes it look clickable */
+    transition: background-color 0.3s ease;
+  }
+
+  li:hover {
+    background-color: #ddd; /* Light hover effect */
+  }
+
+  /* Highlight the selected user */
+  li.selected {
+    background-color: #007bff;
+    color: white;
+  }
+  .user-name {
+    cursor: pointer; /* Indicates it's clickable */
+    padding: 10px 20px; /* Adds some space around the content */
+    background-color: #f4f4f4; /* Light gray background */
+    border-radius: 5px; /* Rounded corners */
+    margin: 10px 0px 10px; /* Adds space between users */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions for background and text color */
+  }
+  
+  .user-name:hover {
+    background-color: #007bff; /* Blue background when hovered */
+    color: white; /* White text when hovered */
+  }
+  
+  .user-name h3 {
+    font-size: 18px; /* Slightly larger font size for the username */
+    margin: 0; /* Removes the default margin */
+    font-weight: 600; /* Bold text */
+    text-transform: capitalize; /* Capitalize the first letter of each word */
+  }
+  

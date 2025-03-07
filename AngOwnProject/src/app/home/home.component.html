@@ -1,4 +1,5 @@
 <!-- image-carousel.component.html -->
+<div *ngIf="!isDeliveryBoy">
 <div class="carousel">
   <div class="carousel-inner">
     <img [src]="carouselService.getCurrentImage()" alt="carousel image" class="carousel-image">
@@ -16,7 +17,7 @@
 
 
 <app-products   (productClicked)="handleProductClicked($event)"></app-products>
-
+</div>
 
 
 

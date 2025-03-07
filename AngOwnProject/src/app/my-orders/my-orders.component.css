@@ -1,0 +1,35 @@
+.user-section {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.user-name {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.order-list {
+  margin-left: 20px;
+}
+
+.order-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.order-details p {
+  margin: 5px 0;
+}
+.no-orders-message {
+  position: absolute;        /* Position relative to the parent container (viewport) */
+  top: 50%;                  /* Move 50% down from the top of the viewport */
+  left: 50%;                 /* Move 50% from the left of the viewport */
+  transform: translate(-50%, -50%); /* Adjust position to truly center it */
+  font-size: 18px;           /* Customize font size */
+  color: #333;               /* Customize text color */
+  text-align: center;        /* Center text inside the div */
+  font-weight: bold;         /* Optional: make the text bold */
+}

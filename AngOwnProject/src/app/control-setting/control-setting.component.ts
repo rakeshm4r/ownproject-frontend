@@ -36,7 +36,7 @@ export class ControlSettingComponent implements OnInit {
   displayRoleChangeDialog: boolean = false;  // Controls dialog visibility
   selectedUser: any;  // The user whose role we want to change
   selectedRole: string = '';  // The role the user selects
-  availableRoles: string[] = ['Admin', 'User', 'Manager'];  // Array of strings (roles)
+  availableRoles: string[] = ['Admin', 'User', 'Manager','Delivery Boy'];  // Array of strings (roles)
 
   openRoleChangePopup(user: any) {
     this.selectedUser = user;  // Set the user whose role is being changed

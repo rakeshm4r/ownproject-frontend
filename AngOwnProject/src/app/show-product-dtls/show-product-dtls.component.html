@@ -26,13 +26,23 @@
                 <p>Price: ₹{{ product.productPrice }}</p>
                 <p *ngIf="product.noOfItems !== null && product.noOfItems !== undefined">Items: {{ product.noOfItems }}</p>
                 <p *ngIf="product.categoryName !== null && product.categoryName !== undefined">Category: {{ product.categoryName }}</p>             
+                
                 <div class="buttons-container">
-                <button class="rk-btn" (click)="showBuyNow ? buyNow(product) : onProductClick(product)">
-                  {{ showBuyNow ? 'Buy Now' : 'Add to Cart' }}
-                  <img src="assets/cart-shopping-fast.png" alt="Cart Icon" class="button-icon">
-                </button>
-                <button class="rk-btn" routerLink="/showCart" *ngIf="showBuyNow">Go to Cart</button>
-              </div>
+                  <!-- Conditionally render buttons based on noOfItems -->
+                  <ng-container *ngIf="product.noOfItems > 0; else outOfStockButtons">
+                    <button class="rk-btn" (click)="showBuyNow ? buyNow(product) : onProductClick(product)">
+                      {{ showBuyNow ? 'Buy Now' : 'Add to Cart' }}
+                      <img src="assets/cart-shopping-fast.png" alt="Cart Icon" class="button-icon">
+                    </button>
+                    <button class="rk-btn" routerLink="/showCart" *ngIf="showBuyNow">Go to Cart</button>
+                  </ng-container>
+                
+                  <!-- If noOfItems == 0, show "Out of stock" message -->
+                  <ng-template #outOfStockButtons>
+                    <p class="out-of-stock">Out of stock</p>
+                  </ng-template>
+                </div>
+                
               </div>
             </div>
           </div>

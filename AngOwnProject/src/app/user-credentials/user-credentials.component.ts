@@ -103,11 +103,11 @@ export class UserCredentialsComponent implements OnInit {
             (response: any) => {
                 if (response.message) {
                        this.credentailsService.setLoggedIn(true);
-                       
-                      //  const userId = response.userId;
-                      //  sessionStorage.setItem('userId', userId);
-                    
-                       this.router.navigate(['home']);
+                      if(this.credentailsService.isDeliveryBoy()){
+                        this.router.navigate(['delivery-home']);
+                      }else{
+                        this.router.navigate(['home']);
+                      }   
                      
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message });
                     

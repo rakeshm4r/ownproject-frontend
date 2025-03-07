@@ -1,0 +1,128 @@
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.order-summary {
+  background-color: #f5f5f5;
+  padding: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.order-summary:hover {
+  background-color: #e0e0e0;
+}
+
+.order-details {
+  background-color: #fafafa;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 10px 0px 10px;
+  border-radius: 8px;
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.order-details-section,
+.user-details-section {
+  width: 48%; /* Takes up 48% of the container */
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #555;
+}
+
+.order-details-section h5,
+.user-details-section h5 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 8px;
+}
+
+strong {
+  color: #555;
+}
+
+/* Make it responsive */
+@media (max-width: 768px) {
+  .details-container {
+    flex-direction: column; /* Stack vertically on smaller screens */
+  }
+
+  .order-details-section,
+  .user-details-section {
+    width: 100%; /* Take up 100% width on smaller screens */
+    margin-bottom: 20px;
+  }
+}
+
+
+.green {
+  background-color: green;
+  color: white;
+}
+
+.red {
+  background-color: red;
+  color: white;
+}
+
+.yellow {
+  background-color: yellow;
+  color: black;
+}
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.filter-item {
+  flex: 1 1 30%; /* Each item takes up 30% of the width, but will shrink or grow */
+  min-width: 200px; /* Minimum width to ensure no item is too small */
+}
+
+.filter-item label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 768px) {
+  .filter-item {
+    flex: 1 1 48%; /* On medium screens, items take up around half the width */
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-item {
+    flex: 1 1 100%; /* On smaller screens, each item takes full width */
+  }
+}
