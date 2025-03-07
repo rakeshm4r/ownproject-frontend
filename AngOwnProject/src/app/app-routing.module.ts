@@ -15,6 +15,10 @@ import { ProductsComponent } from './products/products.component';
 import { ShowProductDtlsComponent } from './show-product-dtls/show-product-dtls.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
+import { DeliveryHomeComponent } from './delivery-home/delivery-home.component';
 
 
 
@@ -33,13 +37,17 @@ const routes: Routes = [
             { path: 'add-products', component: AddProductsComponent, canActivate: [RoleGuard]  },
             { path: 'profile', component:ProfileComponent},
             { path: 'dynamic-heading-tags',component:DynamicHeadingTagsComponent},
-            
+           
              ]      
       },
+      { path:'delivery-home', component:DeliveryHomeComponent, canActivate: [RoleGuard]},
       { path: 'products',component:ProductsComponent},
       { path: 'show-products/:productName',component:ShowProductDtlsComponent},
       { path: 'showCart',component:CartComponent},
       { path: 'order-products/:productName',component:OrderComponent},
+      { path: 'order-confirmation',component:OrderConfirmationComponent},
+      { path: 'my-orders',component:MyOrdersComponent},
+      { path: 'adminorders',component:AdminOrdersComponent, canActivate: [RoleGuard] },
     ]
   },
   { path: '**', component: ErrorComponent },

@@ -16,10 +16,15 @@ export class HomeHeaderComponent implements OnInit {
   
   isAdmin: boolean = false;  // To store if the user is an admin
   isloggedIn:boolean = false;
+  isDeliveryBoy:boolean =false;
+
   ngOnInit(): void {
     this.isloggedIn=this.credentialsService.isLoggedIn();
     this.isAdmin = this.credentialsService.isAdmin();  // Set isAdmin based on user role
-    this. getAllHeadingTags();
+    this.isDeliveryBoy = this.credentialsService.isDeliveryBoy();
+    if(!this.isDeliveryBoy){
+      this. getAllHeadingTags();
+    }
   }
 
    userId = sessionStorage.getItem('userId');

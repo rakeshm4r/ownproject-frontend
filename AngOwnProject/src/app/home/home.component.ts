@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CarouselService } from '../UI-Services/carousel.service';
 import { ProductService } from '../API-Services/product.service';
 import { Router } from '@angular/router';
+import { CredentailsService } from '../API-Services/credentails.service';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +12,13 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(public carouselService: CarouselService,private router: Router,
-    private productService:ProductService) {}
+    private productService:ProductService,private credentialsService:CredentailsService) {}
 
+    isDeliveryBoy:boolean =false;
   ngOnInit(): void {
     // Start auto sliding when component is initialized
     this.carouselService.startAutoSlide(5000);  // Change image every 3 seconds
-    
+    this.isDeliveryBoy = this.credentialsService.isDeliveryBoy();
   }
   
   ngOnDestroy(): void {

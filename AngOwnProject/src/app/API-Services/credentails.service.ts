@@ -119,6 +119,10 @@ export class CredentailsService {
     return this.getUserRole() === 'Admin' || this.getUserRole() === 'admin';
   }
 
+  isDeliveryBoy():boolean {
+    return this.getUserRole() === 'Delivery Boy' || this.getUserRole() === 'delivery boy'; 
+  }
+
   checkEmail(email: string): Observable<boolean> {
     const checkEmailUrl = `${this.apiUrl}/check-email`;
     return this.http.post<boolean>(checkEmailUrl, { emailId: email }).pipe(
@@ -159,4 +163,5 @@ export class CredentailsService {
 
     return this.http.get<any>(getUser, { params });
   }
+  
 }

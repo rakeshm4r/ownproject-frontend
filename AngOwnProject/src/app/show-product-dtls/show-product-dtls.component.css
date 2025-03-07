@@ -55,3 +55,9 @@ h3 {
     align-items: center; /* Center align the items */
   }
 }
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 10px;
+}

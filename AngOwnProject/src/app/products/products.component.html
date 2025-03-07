@@ -14,6 +14,13 @@
     <p>Price: ₹{{ product.productPrice }}</p>
     <p *ngIf="product.noOfItems !== null && product.noOfItems !== undefined">Items: {{ product.noOfItems }}</p>
     <p *ngIf="product.categoryName !== null && product.categoryName !== undefined">Category: {{ product.categoryName }}</p>
-    <button  class="rk-btn" (click)="onProductClick(product)">Click to Add</button>
+
+    <ng-container *ngIf="product.noOfItems > 0; else outOfStock">
+      <button class="rk-btn" (click)="onProductClick(product)">Click to Add</button>
+    </ng-container>
+    <ng-template #outOfStock>
+      <p class="out-of-stock">Out of stock</p>
+    </ng-template>
+    
   </div>
 </div>

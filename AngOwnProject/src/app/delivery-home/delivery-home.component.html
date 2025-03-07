@@ -1,0 +1,73 @@
+<div class="filters-container">
+  <!-- Order Status Filter -->
+  <div class="filter-item">
+    <label for="orderStatus">Order Status</label>
+    <select id="orderStatus" [(ngModel)]="selectedStatus" (change)="filterOrders()" class="form-control">
+      <option value="all">All</option>
+      <!-- <option value="pending">Pending</option>
+      <option value="confirmed">Confirmed</option>
+      <option value="packed&shipped">Packed and Shipped</option>
+      <option value="delivered">Delivered</option>
+      <option value="notDelivered">Not Delivered</option> -->
+    </select>
+  </div>
+
+  <!-- From Date Picker -->
+  <div class="filter-item">
+    <label for="fromDate">From Date</label>
+    <input id="fromDate" type="date" [(ngModel)]="selectedFromDate" (change)="filterOrders()" class="form-control"/>
+  </div>
+
+  <!-- To Date Picker -->
+  <div class="filter-item">
+    <label for="toDate">To Date</label>
+    <input id="toDate" type="date" [(ngModel)]="selectedToDate" (change)="filterOrders()"  class="form-control" />
+  </div>
+</div>
+
+<div class="container">
+  <!-- Loop through all orders -->
+  <div *ngFor="let order of filteredOrders">
+    <div
+      class="order-summary"
+      [ngClass]="getOrderStatusColor(order)"
+      (click)="selectOrder(order)"
+    >
+      <!-- Display userName and orderNumber -->
+      <h4>{{ order.userDetails.userName }} - {{ order.orderNumber }}</h4>
+    </div>
+
+    <!-- Conditionally display order and user details if the order is selected -->
+    <div *ngIf="selectedOrder === order" class="order-details">
+      <div class="details-container">
+        <!-- Order Details Section -->
+        <div class="order-details-section">
+          <h5>Order Details:</h5>
+          <ul>
+            <li><strong>Product Name:</strong> {{ order.productName }}</li>
+            <li><strong>Order Status:</strong> {{ order.orderStatus }}</li>
+            <li><strong>Payment Amount:</strong> ₹{{ order.paymentAmount }}</li>
+            <li><strong>Payment Status:</strong> {{ order.paymentStatus }}</li>
+            <li><strong>Booked Order Date:</strong> {{ order.bookedOrderdDate | date:'dd-MM-yyyy' }}</li>
+            <li><strong>Delivered Order Date:</strong> {{ order.deliveredOrderdDate | date:'dd-MM-yyyy' }}</li>
+            <li><strong>Payment Type:</strong> {{ order.paymentTypeName }}</li>
+          </ul>
+        </div>
+
+        <!-- User Details Section -->
+        <div class="user-details-section">
+          <h5>User Details:</h5>
+          <ul>
+            <li><strong>Email:</strong> {{ order.userDetails.emailId }}</li>
+            <li><strong>Mobile No:</strong> {{ order.userDetails.mobileNo }}</li>
+            <li><strong>Address:</strong> {{ order.userDetails.address }}</li>
+            <li><strong>City:</strong> {{ order.userDetails.city }}</li>
+            <li><strong>State:</strong> {{ order.userDetails.state }}</li>
+            <li><strong>Pin Code:</strong> {{ order.userDetails.pinCode }}</li>
+            <li><strong>Country:</strong> {{ order.userDetails.country }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

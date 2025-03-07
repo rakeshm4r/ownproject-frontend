@@ -1,0 +1,111 @@
+<!-- Display the list of users -->
+
+<!-- <h3>Users List</h3>
+<ul>
+  <li *ngFor="let user of users" 
+      (click)="onUserClick(user)" 
+      [class.selected]="selectedUserName === user.userName">
+    {{ user.userName }} ({{ user.emailId }})
+  </li>
+</ul> 
+
+
+
+<div *ngIf="selectedUserOrders.length > 0">
+  <h3>Order Details for {{ selectedUserName }}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Order Number</th>
+        <th>Product Name</th>
+        <th>Payment Amount</th>
+        <th>Payment Status</th>        
+        <th>Booked Date</th>
+        <th>Delivered Date</th>
+        <th>Payment Type</th>
+        <th> Change Order Status</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of selectedUserOrders">
+        <td data-label="Order Number">{{ order.orderNumber }}</td>
+        <td data-label="Product Name">{{ order.productName }}</td>
+        <td data-label="Payment Amount">{{ order.paymentAmount | currency }}</td>
+        <td data-label="Payment Status">{{ order.paymentStatus }}</td>      
+        <td data-label="Booked Date">{{ order.bookedOrderdDate | date: 'dd-MM-yyyy' }}</td>
+        <td data-label="Delivered Date">{{ order.deliveredOrderdDate | date: 'dd-MM-yyyy' }}</td>
+        <td data-label="Payment Type">{{ order.paymentTypeName }}</td>        
+        <td data-label="Change Status">
+          <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="packed&shipped">Packed and Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="notDelivered">Not Delivered</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div *ngIf="noOrdersFound">
+  <p  style="color: red;">No orders found for this user.</p>
+</div>
+-->
+
+<div *ngFor="let user of userKeys">
+  <div (click)="toggleOrders(user)" class="user-name">
+    <h3>{{ user }}
+      <!-- Show "New order generated!" next to the username if the user has new orders -->
+      <span *ngIf="newOrders[user]" class="new-order">
+        New order generated! ({{ newOrders[user] }} new orders)
+      </span>
+    </h3>
+  </div>
+
+  <div *ngIf="selectedUser === user">
+    <!-- Check if the user has orders -->
+    <div *ngIf="!usersOrdersMap[user] || usersOrdersMap[user].length === 0">
+      <p style="color: red;">No orders found for this user.</p>
+    </div>
+    
+    <!-- Display table of orders if there are any -->
+    <table *ngIf="usersOrdersMap[user] && usersOrdersMap[user].length > 0" class="order-table">
+      <thead>
+        <tr>
+          <th>Order Number</th>
+          <th>Product Name</th>
+          <th>Payment Amount</th>
+          <th>Payment Status</th>         
+          <th>Booked Date</th>
+          <th>Delivered Date</th>
+          <th>Change Order Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of usersOrdersMap[user]">
+          <td>{{ order.orderNumber }}</td>
+          <td>{{ order.productName }}</td>
+          <td>${{ order.paymentAmount }}</td>
+          <td>{{ order.paymentStatus }}</td>         
+          <td>{{ order.bookedOrderdDate | date }}</td>
+          <td>{{ order.deliveredOrderdDate | date }}</td>
+          <td>
+            <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="packed&shipped">Packed and Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="notDelivered">Not Delivered</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

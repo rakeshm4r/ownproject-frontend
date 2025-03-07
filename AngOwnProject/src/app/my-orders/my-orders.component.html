@@ -1,0 +1,32 @@
+<!-- Display message when products is null or empty -->
+<div *ngIf="products == null || products.length === 0" class="no-orders-message">
+  You don't have any orders up to now.
+</div>
+
+<!-- The rest of your code to display orders... -->
+
+
+<!-- Display orders grouped by user -->
+<div *ngIf="products != null && products.length > 0">
+  <div *ngFor="let user of getUniqueUsers()">
+    <div class="user-section">
+      <!-- User's Name as clickable header -->
+      <h3 (click)="toggleUserOrders(user)" class="user-name">
+        {{ user }}
+      </h3>
+
+      <!-- Display Orders of the User if it is expanded -->
+      <div *ngIf="expandedUser === user" class="order-list">
+        <div *ngFor="let order of filterOrdersByUser(user)" class="order-item">
+          <div class="order-details">
+            <p><strong>Product Name:</strong> {{ order.productName }}</p>
+            <p><strong>Payment Amount:</strong> ₹{{ order.paymentAmount }}</p>
+            <p><strong>Order Status:</strong> {{ order.orderStatus }}</p>
+            <p><strong>Payment Status:</strong> {{ order.paymentStatus }}</p>
+            <p><strong>Payment Type:</strong> {{ order.paymentTypeName }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

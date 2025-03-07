@@ -47,3 +47,8 @@
 input{
   width: 50%;
 }
+
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+}

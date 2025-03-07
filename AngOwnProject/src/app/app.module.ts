@@ -38,6 +38,12 @@ import { CartComponent } from './cart/cart.component';
 import { AuthInterceptorService } from './API-Services/auth-interceptor.service';
 import { OrderComponent } from './order/order.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
+import { DeliveryHomeComponent } from './delivery-home/delivery-home.component';
+import { CalendarModule } from 'primeng/calendar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -58,13 +64,17 @@ import { PaymentsComponent } from './payments/payments.component';
     ShowProductDtlsComponent,
     CartComponent,
     OrderComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    OrderConfirmationComponent,
+    MyOrdersComponent,
+    AdminOrdersComponent,
+    DeliveryHomeComponent
   ],
   imports: [
     BrowserModule,ReactiveFormsModule , HttpClientModule ,FormsModule,CardModule,
     AppRoutingModule,ToastModule,ButtonModule,BrowserAnimationsModule,InputTextModule,
     DialogModule,ProgressBarModule,ProgressSpinnerModule,SplitterModule,CarouselModule,
-    DropdownModule,
+    DropdownModule,CalendarModule,MatTabsModule,
   ],
   providers: [MessageService,
                         { provide: HTTP_INTERCEPTORS,    useClass: AuthInterceptorService,    multi: true  }

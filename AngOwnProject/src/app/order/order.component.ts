@@ -91,7 +91,7 @@ export class OrderComponent implements OnInit {
           image: 'https://example.com/logo.png',
           order_id: orderId,
           handler: (response: any) => {  // Arrow function to bind `this`
-            console.log("Payment Response: ", response);
+          //  console.log("Payment Response: ", response);
       
             const paymentDetails = {
               userId: userProfile.userId,  // Ensure this is available in userProfile
@@ -118,11 +118,20 @@ export class OrderComponent implements OnInit {
         razorpay.open();
       }
       
-      
+      countdown: number = 10; // Default countdown starts at 10
+      countdownTimer: any;
+    
       saveOrderPaymentDetails(paymentDetails: { userId: any; productId: any; amount: number; razorpay_payment_id: any; razorpay_order_id: any }) {
-        this.razorpayService.saveOrderpaymentDetails(paymentDetails).subscribe(response => {
-          console.log('Payment details saved:', response.message);
-        });
+        this.razorpayService.saveOrderpaymentDetails(paymentDetails).subscribe(
+          (response: any) => {
+            if (response.message) {              
+              this.router.navigate(['/order-confirmation']);
+            }         
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
+          }
+        );
       }
       
 }
