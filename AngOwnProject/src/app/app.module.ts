@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -43,8 +43,10 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { DeliveryHomeComponent } from './delivery-home/delivery-home.component';
 import { CalendarModule } from 'primeng/calendar';
-import { MatTabsModule } from '@angular/material/tabs';
-
+import {MatTabsModule} from '@angular/material/tabs';
+import { AdminOrdersTableComponent } from './admin-orders-table/admin-orders-table.component';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmationService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,17 +70,19 @@ import { MatTabsModule } from '@angular/material/tabs';
     OrderConfirmationComponent,
     MyOrdersComponent,
     AdminOrdersComponent,
-    DeliveryHomeComponent
+    DeliveryHomeComponent,
+    AdminOrdersTableComponent
   ],
   imports: [
     BrowserModule,ReactiveFormsModule , HttpClientModule ,FormsModule,CardModule,
     AppRoutingModule,ToastModule,ButtonModule,BrowserAnimationsModule,InputTextModule,
     DialogModule,ProgressBarModule,ProgressSpinnerModule,SplitterModule,CarouselModule,
-    DropdownModule,CalendarModule,MatTabsModule,
+    DropdownModule,CalendarModule,MatTabsModule,ConfirmPopupModule,
   ],
-  providers: [MessageService,
+  providers: [MessageService,ConfirmationService,
                         { provide: HTTP_INTERCEPTORS,    useClass: AuthInterceptorService,    multi: true  }
       ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class AppModule { }

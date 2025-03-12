@@ -63,10 +63,11 @@ export class RazorpayService {
       return this.http.get<any>(getMyOrdersUrl);
     }
 
-    getAdminOrdersByUsers(): Observable<any> {
-      const getAdminOrdersUrl = `${this.apiCreateOrderUrl}/getAllOrdersByUsers`;
+    getAdminOrdersByUsers(status: string): Observable<any> {
+      const getAdminOrdersUrl = `${this.apiCreateOrderUrl}/getAllOrdersByUsers?deliverdStatus=${status}`;
       return this.http.get<any>(getAdminOrdersUrl);
     }
+    
 
     getUserOrders(userId: number): Observable<any[]> {
       return this.http.get<any[]>(`${this.apiUserOrders}/${userId}`);

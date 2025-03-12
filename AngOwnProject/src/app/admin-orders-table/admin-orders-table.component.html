@@ -1,0 +1,123 @@
+<p-confirmPopup></p-confirmPopup>
+<table class="order-table">
+  <thead>
+    <tr>
+      <th>User Name</th>
+      <th>Order Number</th>
+      <th>Product Name</th>
+      <th>Payment Amount</th>
+      <th>Payment Status</th>
+      <th>Booked Date</th>
+      <th>Delivered Date</th>
+      <th *ngIf="!isOrderStatusDisabled()">Change Order Status</th>
+      <th *ngIf="isDeliveredOrNotDeliveredPresent()">Order Status</th>
+      <th *ngIf="isNotConfirmed()">Modified Order Status by User</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <ng-container *ngIf="filteredOrders.length > 0; else noOrders">
+    <tr *ngFor="let order of filteredOrders">
+      <td>
+        <span style="text-transform: none;">
+          {{ (order.userName | uppercase).substring(0, 1) + (order.userName | slice:1) }}
+        </span> 
+      </td>
+      
+      <td>{{ order.orderNumber }}</td>
+      <td>{{ order.productName }}</td>
+      <td>₹{{ order.paymentAmount }}</td>
+      <td>{{ order.paymentStatus }}</td>
+      <td>{{ order.bookedOrderdDate | date:'dd-MM-yyyy' }}</td>
+      <td>{{ order.deliveredOrderdDate | date:'dd-MM-yyyy' }}</td>
+      <td>
+        <ng-container>
+          <select [(ngModel)]="order.orderStatus" (change)="onOrderStatusChange($event, order)" [disabled]="order.orderStatus === 'notDelivered' || order.orderStatus == 'delivered'">
+            <option *ngIf="order.orderStatus !== 'packed&shipped' && order.orderStatus !== 'delivered' && order.orderStatus !== 'notDelivered'" value="confirmed">Confirmed</option>
+            <option *ngIf="order.orderStatus !== 'notDelivered' && order.orderStatus !== 'delivered'" value="packed&shipped">Packed and Shipped</option>
+            <option *ngIf="order.orderStatus == 'delivered' || order.orderStatus == 'packed&shipped' " value="delivered">Delivered</option>
+            <option *ngIf="order.orderStatus == 'notDelivered'  || order.orderStatus == 'confirmed' || order.orderStatus == 'packed&shipped'" value="notDelivered">Not Delivered</option>           
+          </select>
+        </ng-container>      
+      </td>
+      <td>
+        <ng-container *ngIf="['packed&shipped', 'delivered', 'notDelivered'].includes(order.orderStatus) && order.orderStatus !== 'confirmed'">
+          <span style="text-transform: none;">
+            {{ (order.modifiedUser | uppercase).substring(0, 1) + (order.modifiedUser | slice:1) }}
+          </span>               
+        </ng-container>
+        
+    </td>      
+    </tr>
+  </ng-container>
+  <ng-template #noOrders>
+    <tr>
+      <td colspan="9" style="text-align: center; font-weight: bold;">No Orders Available</td>
+    </tr>
+  </ng-template>
+  </tbody>
+</table>
+
+<p-dialog [(visible)]="reasonDialogVisible" [modal]="true" [closable]="false" [responsive]="true" [style]="{width: '300px'}">
+  <p-header>Reason for Not Delivered of Order 
+     <span [ngStyle]="{'color': 'red'}"># {{ selectedOrder?.orderNumber }}</span>
+  </p-header>
+  <div *ngIf="selectedOrder && selectedOrder.orderStatus === 'notDelivered'">
+    <label for="reason">Reason for Not Delivered:</label>
+    <textarea id="reason" [(ngModel)]="selectedOrder.reason" placeholder="Provide a reason..." rows="3"></textarea>
+
+    <!-- Submit button that is disabled if no reason is entered -->
+    <div class="button-container" style="margin: 0 !important;">
+      <button [disabled]="!selectedOrder.reason" class="rk-btn" (click)="onSubmitReason(selectedOrder)">Submit</button>
+      <button type="button" (click)="closeSubmitReason(selectedOrder)" class="rk-btn">Cancel</button>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- <ng-container *ngIf="['delivered', 'notDelivered'].includes(order.orderStatus)">
+  <span>{{ order.orderStatus === 'notDelivered' ? 'Not Delivered' : order.orderStatus | titlecase }}</span>
+</ng-container>
+
+<ng-container *ngIf="['confirmed', 'packed&shipped'].includes(order.orderStatus)">
+  <select [(ngModel)]="order.orderStatus" (change)="onOrderStatusChange($event, order)">
+    <option *ngIf="order.orderStatus !== 'packed&shipped' && order.orderStatus !== 'delivered' && order.orderStatus !== 'notDelivered'" value="confirmed">Confirmed</option>
+    <option *ngIf="order.orderStatus !== 'notDelivered'" value="packed&shipped">Packed and Shipped</option>
+    <option *ngIf="order.orderStatus !== 'notDelivered'" value="notDelivered">Not Delivered</option>           
+  </select>
+</ng-container> -->
+
+
+<!-- <ng-container *ngIf="order.orderStatus !== 'delivered' && order.orderStatus !== 'notDelivered'">
+  <select [(ngModel)]="order.orderStatus" (change)="onOrderStatusChange($event, order)">
+  <option value="pending">Pending</option>
+  <option value="confirmed">Confirmed</option>
+  <option value="packed&shipped">Packed and Shipped</option>
+  <option value="delivered">Delivered</option>
+  <option value="notDelivered">Not Delivered</option>
+</select>
+</ng-container> -->
+
+
+<!-- 
+<ng-container *ngIf="order.orderStatus === 'confirmed'">
+  <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">
+    <option value="confirmed">Confirmed</option>
+    <option value="packed&shipped">Packed and Shipped</option>
+    <option value="notDelivered">Not Delivered</option>
+  </select>
+</ng-container>
+<ng-container *ngIf="order.orderStatus === 'packed&shipped'">
+  <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">            
+    <option value="packed&shipped">Packed and Shipped</option>
+    <option value="notDelivered">Not Delivered</option> 
+  </select>
+</ng-container>
+<ng-container *ngIf="order.orderStatus !== 'delivered' && order.orderStatus !== 'notDelivered' && order.orderStatus !== 'confirmed' && order.orderStatus !== 'packed&shipped'">
+  <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">
+    <option value="pending">Pending</option>
+    <option value="confirmed">Confirmed</option>
+    <option value="packed&shipped">Packed and Shipped</option>
+    <option value="delivered">Delivered</option>
+    <option value="notDelivered">Not Delivered</option>
+  </select>
+</ng-container> -->

@@ -1,0 +1,82 @@
+
+  /* Style the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px ;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style the table header */
+  th {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  /* Style the table data */
+  td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* Hover effect for table rows */
+  tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  /* Make the table responsive */
+  @media screen and (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+
+    /* Remove the table header styling */
+    thead {
+      display: none;
+    }
+
+    /* Add padding to the rows for readability */
+    tr {
+      margin-bottom: 10px;
+      border: 1px solid #0b0b0b;
+    }
+
+    /* Each cell should take up the entire width */
+    td {
+      display: block;
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+    }
+
+    td::before {
+      /* Label each cell with the header name */
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    td:nth-of-type(1)::before { content: 'User Name'; }
+    td:nth-of-type(2)::before { content: 'Order Number'; }
+    td:nth-of-type(3)::before { content: 'Product Name'; }
+    td:nth-of-type(4)::before { content: 'Payment Amount'; }
+    td:nth-of-type(5)::before { content: 'Payment Status'; }   
+    td:nth-of-type(6)::before { content: 'Booked Date'; }
+    td:nth-of-type(7)::before { content: 'Delivered Date'; }
+    td:nth-of-type(8)::before { content: 'Change Order Status'; }
+    
+  }
+
+  
+  label[for="reason"] {
+    color: red;
+  }
+  
+ textarea{
+  width: 100%;
+ }
+  
+
