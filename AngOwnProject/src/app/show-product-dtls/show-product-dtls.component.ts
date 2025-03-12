@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../API-Services/product.service';
 import { CartService } from '../API-Services/cart.service';
@@ -17,13 +17,14 @@ export class ShowProductDtlsComponent implements OnInit {
     private productService: ProductService  ,private cartService:CartService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
     this.route.paramMap.subscribe(params => {
       const productId = params.get('productName')!;
       this.getProductDetails(productId);
-    });
-    
+    });    
   }
+
+    
 
   // Fetch product details from your service or data source based on product ID
   getProductDetails(productId: string | null) {
@@ -31,12 +32,12 @@ export class ShowProductDtlsComponent implements OnInit {
       this.productService.getProductById(productId).subscribe((product: any) => {
         this.products = product; // Assign the fetched product data
         this.selectedProduct=true
+        this.showBuyNow = false;
       });
     }
   }
   handleProductClicked(product: any) {
-    this.router.navigate([`/path/${product.productName}`]); 
-     
+    this.router.navigate([`/path/${product.productName}`]);      
   }
 
   showBuyNow:boolean=false

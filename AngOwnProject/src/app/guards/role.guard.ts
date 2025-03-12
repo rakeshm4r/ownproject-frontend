@@ -13,7 +13,7 @@ export class RoleGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (this.credentialsService.isAdmin()) {
+    if (this.credentialsService.isAdmin() || this.credentialsService.isDeliveryBoy()) {
       // Allow access if user is an admin
       return true;
     } else {

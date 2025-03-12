@@ -1,32 +1,74 @@
 <!-- Display message when products is null or empty -->
-<div *ngIf="products == null || products.length === 0" class="no-orders-message">
+<!-- <div *ngIf="products == null || products.length === 0" class="no-orders-message">
   You don't have any orders up to now.
+</div> -->
+<div *ngIf="loading" class="no-orders-message">
+  <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
 </div>
 
-<!-- The rest of your code to display orders... -->
-
-
 <!-- Display orders grouped by user -->
-<div *ngIf="products != null && products.length > 0">
-  <div *ngFor="let user of getUniqueUsers()">
+<div *ngIf="!loading  && products.length > 0">
+  
     <div class="user-section">
-      <!-- User's Name as clickable header -->
-      <h3 (click)="toggleUserOrders(user)" class="user-name">
-        {{ user }}
-      </h3>
-
-      <!-- Display Orders of the User if it is expanded -->
-      <div *ngIf="expandedUser === user" class="order-list">
-        <div *ngFor="let order of filterOrdersByUser(user)" class="order-item">
+      <div  class="order-list">
+        <div *ngFor="let order of products" class="order-item">
           <div class="order-details">
-            <p><strong>Product Name:</strong> {{ order.productName }}</p>
+            <p><strong>Order Id:</strong> {{ order.orderNumber }}
+              <span style="float: inline-end;">               
+                <a (click)="seeProduct(order)" style="color: #007bff; cursor: pointer;">Product Details</a>
+              </span>
+            </p>
+            <p>
+              <strong>Product Name:</strong> {{ order.productName }}              
+            </p>
+                        
+            <p>
+              <strong>Order Status:</strong> 
+              <span [ngStyle]="getOrderStatusStyle(order.orderStatus)">{{ (order.orderStatus | uppercase).substring(0, 1) + (order.orderStatus | slice:1) }}  </span>             
+            </p>
+            
             <p><strong>Payment Amount:</strong> ₹{{ order.paymentAmount }}</p>
-            <p><strong>Order Status:</strong> {{ order.orderStatus }}</p>
             <p><strong>Payment Status:</strong> {{ order.paymentStatus }}</p>
             <p><strong>Payment Type:</strong> {{ order.paymentTypeName }}</p>
+            <p *ngIf="order?.reason !== null">
+              <strong>Reason for Not Delivered:</strong> 
+              <span [ngStyle]="getOrderStatusStyle(order.orderStatus)">  {{order?.reason}}</span>            
+            </p>
+            <p><strong>Booked Orderd Date:</strong>{{ order.bookedOrderdDate | date:'dd-MM-yyyy' }}</p>  
+            <p *ngIf="order.orderStatus !== 'notDelivered'">
+              <strong>Delivered Orderd Date:</strong> {{ order.deliveredOrderdDate | date:'dd-MM-yyyy'}}
+              <span  style="float: inline-end; width: auto;" >
+                <button *ngIf="order.orderStatus === 'confirmed' || order.orderStatus === 'packed&shipped'"
+                 (click)="openCancelDialog(order)" class="rk-btn" style=" background-color: red;">
+                    Cancel Order
+                </button>
+
+                <button *ngIf="order.orderStatus == 'delivered' "  class="rk-btn" (click)="generatePDF(order)">
+                  Get Invoice 
+                </button>
+              </span>
+            </p>                    
           </div>
+          
+          
         </div>
       </div>
     </div>
-  </div>
+ 
 </div>
+<p-confirmPopup></p-confirmPopup>
+
+<p-dialog [(visible)]="reasonDialogVisible" [modal]="true" [closable]="false" [responsive]="true" [style]="{width: '350px'}">
+  <p-header>Reason for Cancelling the Order</p-header>
+  
+  <label for="reason">Reason for Not Delivered:</label>
+  <textarea id="reason" [(ngModel)]="selectedOrder.reason" placeholder="Provide a reason..." rows="3"></textarea>
+
+  <!-- Submit button that is disabled if no reason is entered -->
+  <div class="button-container" style="margin: 0 !important;">
+    <button [disabled]="!selectedOrder.reason" class="rk-btn" (click)="onSubmitReason(selectedOrder)">Submit</button>
+    <button type="button" (click)="closeSubmitReason(selectedOrder)" class="rk-btn">Cancel</button>
+  </div>
+
+</p-dialog>
+

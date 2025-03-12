@@ -1,7 +1,8 @@
 .user-section {
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc;  
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .user-name {
@@ -11,15 +12,41 @@
 }
 
 .order-list {
-  margin-left: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Allows the items to wrap to the next row if necessary */
+  gap: 20px; /* Adds spacing between order items */
+  justify-content: space-between; /* Ensures orders are spaced out evenly */
 }
 
 .order-item {
-  padding: 10px;
+  flex: 1 1 355px; /* Each order takes at least 300px of space, but can grow */
+  background-color: #f9f9f9; /* Add some background color */
+  padding: 15px;
   border: 1px solid #ddd;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+@media (max-width: 768px) {
+  .order-list {
+    flex-direction: column; /* Stacks the orders vertically on smaller screens */
+    gap: 10px;
+  }
+
+  .order-item {
+    flex: 1 1 100%; /* Makes each order take up full width on smaller screens */
+  }
 }
 
+@media (max-width: 480px) {
+  .order-item {
+    padding: 10px; /* Reduce padding on very small screens */
+  }
+
+  button.rk-btn {
+    padding: 8px;
+  }
+}
 .order-details p {
   margin: 5px 0;
 }
@@ -32,4 +59,11 @@
   color: #333;               /* Customize text color */
   text-align: center;        /* Center text inside the div */
   font-weight: bold;         /* Optional: make the text bold */
+}
+textarea{
+  width: 100%;
+}
+
+label[for="reason"] {
+  color: red;
 }

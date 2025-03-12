@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RazorpayService } from '../API-Services/razorpay.service';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-delivery-home',
@@ -11,8 +12,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class DeliveryHomeComponent implements OnInit {
 
-  constructor(private router: Router,private razorPayService:RazorpayService ) {}
-   
+  constructor(private router: Router, private razorPayService: RazorpayService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+
   ngOnInit(): void {
     this.loadOrderDetails()
   }
@@ -20,24 +21,26 @@ export class DeliveryHomeComponent implements OnInit {
   orders: any[] = [];
   filteredOrders: any[] = [];
   selectedStatus: string = 'all';
-  selectedFromDate: string = '';  
+  selectedFromDate: string = '';
   selectedToDate: string = '';
+  originalOrdersCopy: any[] = [];
 
   loadOrderDetails() {
     this.razorPayService.getAllOrderDetails().subscribe((data: any) => {
-      this.orders = data;   
-      this.filteredOrders = data; 
-      this.filterOrders();  
+      this.orders = data;
+      this.filteredOrders = data;
+      this.originalOrdersCopy = JSON.parse(JSON.stringify(data));  // Create a deep copy
+      this.filterOrders();
     });
   }
   filterOrders() {
     let filteredByStatus = this.orders;
-  
+
     // Filter by order status if it's not 'all'
     if (this.selectedStatus !== 'all') {
       filteredByStatus = filteredByStatus.filter(order => order.orderStatus === this.selectedStatus);
     }
-  
+
     // Filter by date range (from date to to date)
     if (this.selectedFromDate && this.selectedToDate) {
       filteredByStatus = filteredByStatus.filter(order => {
@@ -57,19 +60,70 @@ export class DeliveryHomeComponent implements OnInit {
         return orderDate <= this.selectedToDate;
       });
     }
-  
+
     // Sort orders by deliveredOrderdDate in descending order
     filteredByStatus = filteredByStatus.sort((a, b) => {
       const dateA = new Date(a.deliveredOrderdDate).getTime();
       const dateB = new Date(b.deliveredOrderdDate).getTime();
       return dateB - dateA; // For descending order
     });
-  
+
     // Update filtered orders
     this.filteredOrders = filteredByStatus;
   }
-  
-  
+
+  onOrderStatusChange(event: any, order: any) {
+    const target = event.target as HTMLSelectElement; // Get the dropdown element
+    const currentorderStatus = order.orderStatus
+    const currentStatusId = order.ordersStatusId
+    const originalOrder = this.originalOrdersCopy.find(o => o.orderNumber === order.orderNumber);
+
+    this.confirmationService.confirm({
+      message: `Are you sure you want to update the status of order "${order.productName}" to "${order.orderStatus}"?`,
+      header: 'Confirm Status Change',
+      icon: 'pi pi-exclamation-triangle',
+      target: target,  // Position relative to the dropdown
+      accept: () => {
+        if (order.orderStatus === 'notDelivered' && !order.reason) {
+          this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please provide a reason for the status change.' });
+          return; // Do not submit if no reason is provided
+        }
+
+        const body = {
+          ordersStatusId: order.ordersStatusId,
+          orderStatus: order.orderStatus,
+          reason:order.reason
+        };
+
+        this.razorPayService.updateOrderStatus(body).subscribe(response => {
+          // Handle response after the update.
+        });
+      },
+      reject: () => {
+        // Compare with the original order status
+        if (originalOrder && (currentorderStatus !== originalOrder.orderStatus || currentStatusId !== originalOrder.ordersStatusId)) {
+          // Revert back to the original status and status ID
+          order.orderStatus = originalOrder.orderStatus;
+        }
+
+      }
+    });
+  }
+  onSubmitReason(order: any) {
+    // This method is triggered when the "Submit" button is clicked
+    if (order.reason) {
+     
+      const body = {
+        ordersStatusId: order.ordersStatusId,
+        orderStatus: order.orderStatus,
+        reason:order.reason
+      };
+      this.razorPayService.updateOrderStatus(body).subscribe(response => {
+        // Handle response after the update.
+      });
+    }
+  }
+
   // Helper method to format date to YYYY-MM-DD
   formatDate(date: Date | string): string {
     const d = new Date(date);
@@ -78,7 +132,7 @@ export class DeliveryHomeComponent implements OnInit {
     const day = String(d.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
-  
+
   selectedOrder: any = null;
 
   // Method to select an order and show its details

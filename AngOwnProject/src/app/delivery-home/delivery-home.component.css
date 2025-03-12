@@ -47,6 +47,8 @@
   font-size: 18px;
   color: #333;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: center;;
 }
 
 ul {
@@ -126,3 +128,21 @@ strong {
     flex: 1 1 100%; /* On smaller screens, each item takes full width */
   }
 }
+/* li {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
+} */
+
+button.rk-btn {
+  margin-left: 10px;  /* Space between the input and button */
+  width:48%;
+  margin-top: 13px;
+}
+.reason{
+  display: flex; align-items: center; gap: 10px;
+}
+label[for="reason"] {
+  color: red;
+}
+

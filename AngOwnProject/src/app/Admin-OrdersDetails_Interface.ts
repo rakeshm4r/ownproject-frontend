@@ -7,4 +7,9 @@ export interface OrderDetails {
   bookedOrderdDate: string;
   deliveredOrderdDate: string;
   paymentTypeName: string;
+  orderNumber: string;
+  ordersStatusId :any;
+  reason : any;
+  modifiedUser : any;
+  modifiedOrderdStatusDate :any
 }

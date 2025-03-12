@@ -27,6 +27,7 @@
   justify-content: center; /* Horizontally center the image */
   align-items: flex-end; /* Vertically align image to the bottom */
   padding-right: 10px; /* Space between image and text */
+  height: 100px; overflow: hidden;
 }
 
 .text-container {
