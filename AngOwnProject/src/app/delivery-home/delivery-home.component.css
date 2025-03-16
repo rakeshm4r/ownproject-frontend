@@ -14,9 +14,9 @@
   transition: background-color 0.3s;
 }
 
-.order-summary:hover {
+/* .order-summary:hover {
   background-color: #e0e0e0;
-}
+} */
 
 .order-details {
   background-color: #fafafa;

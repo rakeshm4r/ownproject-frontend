@@ -1,4 +1,6 @@
-
+<div *ngIf="loading" class="loading-message ">
+  <div class="loader"></div>
+</div>
 
 <div style="float: right;padding-right: 20px;margin-top: 10px;">
  <ul>
@@ -9,7 +11,7 @@
  </ul>
 </div>
 
-<div class="table-responsive ">
+<div class="table-responsive " *ngIf="!loading">
   <h2>Users List</h2>
  
     <table class="table table-striped">

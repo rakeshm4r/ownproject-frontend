@@ -11,14 +11,18 @@ export class CartComponent  implements OnInit {
     constructor(private cartService: CartService) {}
     isCartEmpty: boolean = false;
     cartDetails: any[] = [];
+    loading :boolean =false;
+
     ngOnInit(): void {
       this.getCartDetsByUser()
     }
 
 
   getCartDetsByUser(){
+    this.loading = true
     this.cartService.getCartDetsByUser().subscribe((cartData: any) => {
      this.cartDetails=cartData
+     this.loading = false
      if (this.cartDetails.length === 0) {
       this.isCartEmpty = true;  // Set the flag if the cart is empty
     } else {

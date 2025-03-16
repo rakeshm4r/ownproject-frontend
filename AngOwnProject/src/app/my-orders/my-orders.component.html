@@ -1,10 +1,15 @@
 <!-- Display message when products is null or empty -->
-<!-- <div *ngIf="products == null || products.length === 0" class="no-orders-message">
+<div *ngIf="products == null || products.length === 0 && !loading" class="loading-message ">
   You don't have any orders up to now.
-</div> -->
-<div *ngIf="loading" class="no-orders-message">
-  <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
 </div>
+
+<!-- <div *ngIf="loading" class="loading-message ">
+  <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+</div>-->
+<div *ngIf="loading" class="loading-message ">
+    <div class="loader"></div>
+</div>
+
 
 <!-- Display orders grouped by user -->
 <div *ngIf="!loading  && products.length > 0">
@@ -43,7 +48,7 @@
                     Cancel Order
                 </button>
 
-                <button *ngIf="order.orderStatus == 'delivered' "  class="rk-btn" (click)="generatePDF(order)">
+                <button *ngIf="order.orderStatus == 'delivered' "  class="rk-btn" (click)="downloadInvoice(order)">
                   Get Invoice 
                 </button>
               </span>

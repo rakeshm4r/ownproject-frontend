@@ -41,4 +41,7 @@ export class ProductService {
     return this.http.get<any>(url);  // Correct request format
   }
   
+  updateProduct(productId: number, updatedProduct: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${productId}`, updatedProduct);
+  }
 }

@@ -4,7 +4,7 @@
 <div class="col-12" style="margin-top: 10px;">
   <div class="row">
     <div class="col-9 Search">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Search Products" (input)="filterProducts()" />
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search Products or Categories" (input)="filterProducts()" />
     </div>
     <div class="col-3">
       <div class="showedPrds">
@@ -90,7 +90,7 @@
 <div class="product-container">
   <div class="product-card" *ngFor="let product of filteredProducts">
     <div class="edit-icon" *ngIf="!product.isEditing">
-      <img src="assets/edit.png" alt="Edit" width="20" height="20" (click)="startEditing(product)"/>
+      <img src="assets/edit.png" alt="Edit" width="20" height="20" (click)="editProduct(product)"/>
     </div>
     <div class="image-container">
       <img [src]="'data:image/webp;base64,' + product.productImageBase64"
@@ -100,14 +100,13 @@
     <div *ngIf="!product.isEditing">
         <h3>{{ product.productName }}</h3>
         <p>Price: ₹{{ product.productPrice }}</p>
-    <p >Items: {{ product.noOfItems }}</p>
-    <p >Category: {{ product.categoryName }}</p> 
-
+        <p >Items: {{ product.noOfItems }}</p>
+        <p >Category: {{ product.categoryName }}</p> 
     </div>
     <div *ngIf="product.isEditing">
       <div class="input-group">
         <label for="productName">Product Name</label>
-        <input id="productName" type="text" [(ngModel)]="product.productName" />
+        <input id="productName" type="text" [(ngModel)]="product.productName"  [disabled]="product.isEditing"/>
       </div>
     
       <div class="input-group">
@@ -122,7 +121,9 @@
     
       <div class="input-group">
         <label for="category">Category</label>
-        <input id="category" type="text" [(ngModel)]="product.categoryName" />
+        <p-dropdown id="category" [options]="categories" [(ngModel)]="selectedCategory" optionValue="categoryId" 
+         (onChange)="selectedCategory=$event.value" optionLabel="productCategoryName" placeholder="Select Category" >
+      </p-dropdown>
       </div>
     </div>
     

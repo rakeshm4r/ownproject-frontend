@@ -1,4 +1,5 @@
 <p-confirmPopup></p-confirmPopup>
+<div *ngIf="!loading">
 <table class="order-table">
   <thead>
     <tr>
@@ -57,7 +58,7 @@
   </ng-template>
   </tbody>
 </table>
-
+</div>
 <p-dialog [(visible)]="reasonDialogVisible" [modal]="true" [closable]="false" [responsive]="true" [style]="{width: '300px'}">
   <p-header>Reason for Not Delivered of Order 
      <span [ngStyle]="{'color': 'red'}"># {{ selectedOrder?.orderNumber }}</span>
@@ -74,50 +75,6 @@
   </div>
 </p-dialog>
 
-<!-- <ng-container *ngIf="['delivered', 'notDelivered'].includes(order.orderStatus)">
-  <span>{{ order.orderStatus === 'notDelivered' ? 'Not Delivered' : order.orderStatus | titlecase }}</span>
-</ng-container>
-
-<ng-container *ngIf="['confirmed', 'packed&shipped'].includes(order.orderStatus)">
-  <select [(ngModel)]="order.orderStatus" (change)="onOrderStatusChange($event, order)">
-    <option *ngIf="order.orderStatus !== 'packed&shipped' && order.orderStatus !== 'delivered' && order.orderStatus !== 'notDelivered'" value="confirmed">Confirmed</option>
-    <option *ngIf="order.orderStatus !== 'notDelivered'" value="packed&shipped">Packed and Shipped</option>
-    <option *ngIf="order.orderStatus !== 'notDelivered'" value="notDelivered">Not Delivered</option>           
-  </select>
-</ng-container> -->
-
-
-<!-- <ng-container *ngIf="order.orderStatus !== 'delivered' && order.orderStatus !== 'notDelivered'">
-  <select [(ngModel)]="order.orderStatus" (change)="onOrderStatusChange($event, order)">
-  <option value="pending">Pending</option>
-  <option value="confirmed">Confirmed</option>
-  <option value="packed&shipped">Packed and Shipped</option>
-  <option value="delivered">Delivered</option>
-  <option value="notDelivered">Not Delivered</option>
-</select>
-</ng-container> -->
-
-
-<!-- 
-<ng-container *ngIf="order.orderStatus === 'confirmed'">
-  <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">
-    <option value="confirmed">Confirmed</option>
-    <option value="packed&shipped">Packed and Shipped</option>
-    <option value="notDelivered">Not Delivered</option>
-  </select>
-</ng-container>
-<ng-container *ngIf="order.orderStatus === 'packed&shipped'">
-  <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">            
-    <option value="packed&shipped">Packed and Shipped</option>
-    <option value="notDelivered">Not Delivered</option> 
-  </select>
-</ng-container>
-<ng-container *ngIf="order.orderStatus !== 'delivered' && order.orderStatus !== 'notDelivered' && order.orderStatus !== 'confirmed' && order.orderStatus !== 'packed&shipped'">
-  <select [(ngModel)]="order.orderStatus" (ngModelChange)="onOrderStatusChange(order)">
-    <option value="pending">Pending</option>
-    <option value="confirmed">Confirmed</option>
-    <option value="packed&shipped">Packed and Shipped</option>
-    <option value="delivered">Delivered</option>
-    <option value="notDelivered">Not Delivered</option>
-  </select>
-</ng-container> -->
+<div *ngIf="loading" class="loading-message ">
+  <div class="loader"></div>
+</div>
