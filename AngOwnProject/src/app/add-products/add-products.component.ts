@@ -49,12 +49,14 @@ export class AddProductsComponent implements OnInit {
   loadCategories() {
     this.productService.getAllProductCategorys().subscribe((data: any) => {
       this.categories = data;
+      
     });
   }
   loadProducts() {
     this.productService.getAllProducts().subscribe((data: any) => {
       this.products = data;
       this.filteredProducts = data;
+      this.products.forEach(product => product.isEditing = false);
     });
   }
   filterProducts() {
@@ -166,8 +168,6 @@ export class AddProductsComponent implements OnInit {
 
   }
 
-
-
   resetProductForm() {
     // Reset the form controls and their values
     this.productForm.reset();
@@ -187,54 +187,117 @@ export class AddProductsComponent implements OnInit {
      this.router.navigate(['/show-products', product.productName]); 
   }
 
-  // Method to start editing and store the original values
-  startEditing(product: any) {
-    // Create a deep copy of the product object to store the original values
-    this.originalProduct = { ...product };  // or use a library like lodash's _.cloneDeep if needed
-    product.isEditing = true;
-  }
-
+  
   // Method to save changes and log only the changed properties
-  saveChanges(product: any) {
-    const changedFields = this.getChangedFields(product, this.originalProduct);
+  saveChanges(product: any) {   
+    // Check if required fields are valid (i.e., productPrice and noOfItems)
+    if (!product.productPrice || product.productPrice < 0) {
+      return;
+    }
+    
+    if (!product.noOfItems || product.noOfItems < 0) {
+      return;
+    }
+    // Compare current product with the original product to find changes
+    const changedFields = this.getChangedFields(product, product.originalProduct);
+   // Check if the categoryId has changed
+   if (this.selectedCategory && this.selectedCategory !== product.originalProduct.categoryId) {
+    changedFields['categoryId'] = this.selectedCategory; // Use categoryId for update
 
-    // Log only the fields that have changed
-    console.log('Saving changes for product ID:', product.productId);
-    console.log('Saving changes for:', changedFields);
+    const selectedCategory = this.categories.find(c => c.categoryId === this.selectedCategory);
+      if (selectedCategory) {
+        product.categoryName = selectedCategory.productCategoryName;  // Update the categoryName field
+      }
+  }
+    if (Object.keys(changedFields).length > 0) {   
+  
+      // Send the updated product data to the backend     
 
-    product.isEditing = false; // Exit editing mode
+      this.productService.updateProduct(product.productId, changedFields).subscribe({
+        next: (response) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message });
+                 product.isEditing = false; // Exit edit mode after save
+        },
+        error: (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error });
+        }
+      });
+    } else {
+      product.isEditing = false;
+    }
+  }
+  
+
+// Method to compare the current and original product values and return the changed fields
+getChangedFields(currentProduct: any, originalProduct: any) {
+  // If originalProduct is not defined, return an empty object to avoid errors
+  if (!originalProduct) {
+    console.error('Original product data is missing');
+    return {};
   }
 
-  // Method to compare the current and original product values and return the changed fields
-  getChangedFields(currentProduct: any, originalProduct: any) {
-    const changedFields = {} as { [key: string]: any };
+  const changedFields = {} as { [key: string]: any };
 
-    if (currentProduct.productName !== originalProduct.productName) {
-      changedFields['productName'] = currentProduct.productName;
-    }
-    if (currentProduct.productPrice !== originalProduct.productPrice) {
-      changedFields['productPrice'] = currentProduct.productPrice;
-    }
-    if (currentProduct.noOfItems !== originalProduct.noOfItems) {
-      changedFields['noOfItems'] = currentProduct.noOfItems;
-    }
-    if (currentProduct.categoryName !== originalProduct.categoryName) {
-      changedFields['categoryName'] = currentProduct.categoryName;
-    }
-
-    return changedFields;
+  // Compare fields and track changes 
+  // dissable the productName dont comapre....
+  // if (currentProduct.productName !== originalProduct.productName) {
+  //   changedFields['productName'] = currentProduct.productName;
+  // }
+  if (currentProduct.productPrice !== originalProduct.productPrice) {
+    changedFields['productPrice'] = currentProduct.productPrice;
+  }
+  if (currentProduct.noOfItems !== originalProduct.noOfItems) {
+    changedFields['noOfItems'] = currentProduct.noOfItems;
+  }
+ if (this.selectedCategory !== originalProduct.categoryId) {
+    changedFields['categoryId'] = this.selectedCategory; // Use categoryId for update
   }
 
-  cancelEdit(product: any) {
-    // Restore the original product values
-    const original = this.originalProduct;
+  return changedFields;
+}
 
-    // Reset the product to its original state
-    product.productName = original.productName;
-    product.productPrice = original.productPrice;
-    product.noOfItems = original.noOfItems;
-    product.categoryName = original.categoryName;
+selectedCategory: any;
 
-    product.isEditing = false; 
+editProduct(product: any) {
+  // Fetch categories and populate them
+  this.productService.getAllProductCategorys().subscribe((data: any) => {
+    this.categories = data; // Populate categories
+
+    // Find the categoryId that matches the product's categoryName
+    const category = this.categories.find(c => c.productCategoryName === product.categoryName);
+    
+    if (category) {
+      this.selectedCategory = category.categoryId; // Set the selectedCategory to the matching categoryId
+    } else {
+      console.error("Category not found for product:", product.categoryName);
+    }
+
+    console.log(this.selectedCategory); // This will print the categoryId of the selected category
+  });
+
+  // Backup logic for original product data
+  if (!product.originalProduct) {
+    product.originalProduct = { ...product }; // Create a deep copy
   }
+
+  // Close any previously opened edit form
+  this.products.forEach(p => {
+    if (p.isEditing && p !== product) {
+      this.cancelEdit(p); // Cancel previous edits if any
+    }
+  });
+
+  // Enable edit mode for the current product
+  product.isEditing = true;
+}
+
+
+
+
+// Cancel the changes and revert to the original state
+cancelEdit(product: any) {
+  // Revert the product back to its original state
+  Object.assign(product, product.originalData);
+  product.isEditing = false;
+}
 }

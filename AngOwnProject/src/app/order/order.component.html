@@ -1,8 +1,11 @@
 
+<div *ngIf="loading" class="loading-message ">
+  <!-- <p-progressSpinner ariaLabel="loading"></p-progressSpinner> -->
+  <div class="loader"></div>
+</div>
 
 
-
-<div class="col-12 container-fluid">
+<div class="col-12 container-fluid" *ngIf="selectedProduct && !loading">
   <div class="row">
     <div class="col-2" style="border-right: 2px solid #000;">
       <div class="profile-details">
@@ -21,7 +24,7 @@
     </div>
     <div class="col-10">
       <div class="row" style="margin: 20px 20px;">
-        <div class="product-container" *ngIf="selectedProduct">
+        <div class="product-container" >
           <div class="product-card" *ngFor="let product of products">
             <div class="col-12 col-md-4">
               <div class="image-container">
@@ -31,9 +34,22 @@
             </div>
             <div class="col-12 col-md-6">
               <div class="text-container">
-                <h3>{{ product.productName }}</h3>
-                <p>Price: ₹{{ product.productPrice }}</p>
-                <button (click)="pay(product.productPrice,product.productId,userProfile)">₹{{ product.productPrice }}</button>              
+                <h4>{{ product.productName }}</h4>
+                <h4>Price: ₹{{ product.productPrice }}</h4>
+
+                <div class="quantity-container ">
+                  <button class="quantity-button" (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
+                  <span>{{ quantity }}</span>
+                  <button class="quantity-button" (click)="increaseQuantity()" [disabled]="quantity >= product.noOfItems">+</button>
+                </div>
+              
+                
+                  <h4>Total Amount: ₹ {{ totalAmount }}</h4>
+                
+                  <div style="width: 50%;">
+                    <button (click)="pay(totalAmount,product.productId,userProfile,quantity)" class="rk-btn">Pay</button>   
+                  </div>
+                
               </div>
             </div>
           </div>

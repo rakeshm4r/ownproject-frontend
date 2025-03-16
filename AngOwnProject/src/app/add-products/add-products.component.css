@@ -88,6 +88,8 @@ p-dropdown.form-control {
   margin-right: 10px; /* Space between label and input */
 }
 
-.input-group input {
-  flex-grow: 1; /* Input takes the remaining space */
+.input-group p-dropdown {
+  width: 100%; /* Ensures the dropdown takes the full width of its container */
+  display: grid;
+  margin-bottom: 5px
 }

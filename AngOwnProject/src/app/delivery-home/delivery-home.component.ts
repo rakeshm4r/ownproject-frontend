@@ -17,7 +17,7 @@ export class DeliveryHomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadOrderDetails()
   }
-
+  loading :boolean =false;
   orders: any[] = [];
   filteredOrders: any[] = [];
   selectedStatus: string = 'all';
@@ -26,10 +26,12 @@ export class DeliveryHomeComponent implements OnInit {
   originalOrdersCopy: any[] = [];
 
   loadOrderDetails() {
+    this.loading = true
     this.razorPayService.getAllOrderDetails().subscribe((data: any) => {
       this.orders = data;
       this.filteredOrders = data;
       this.originalOrdersCopy = JSON.parse(JSON.stringify(data));  // Create a deep copy
+      this.loading = false;
       this.filterOrders();
     });
   }
@@ -96,7 +98,7 @@ export class DeliveryHomeComponent implements OnInit {
         };
 
         this.razorPayService.updateOrderStatus(body).subscribe(response => {
-          // Handle response after the update.
+          this.loadOrderDetails();
         });
       },
       reject: () => {
@@ -120,6 +122,7 @@ export class DeliveryHomeComponent implements OnInit {
       };
       this.razorPayService.updateOrderStatus(body).subscribe(response => {
         // Handle response after the update.
+        this.loadOrderDetails();
       });
     }
   }

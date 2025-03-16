@@ -1,3 +1,7 @@
+<div *ngIf="loading" class="loading-message ">
+  <div class="loader"></div>
+</div>
+
 <div class="col-12 container-fluid">
   <div class="row">
     <div class="col-1">
@@ -7,7 +11,7 @@
     <div class="col-8">
       <div class="row" style="margin: 20px 20px;">
         <div class="product-container" >
-          <div *ngIf="isCartEmpty; else cartList">
+          <div *ngIf="isCartEmpty && !loading; else cartList">
             <p>Your cart is empty.</p>
           </div>
           

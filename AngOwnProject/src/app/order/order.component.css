@@ -22,25 +22,6 @@
   padding-right: 10px; /* Space between image and text */
 }
 
-.text-container {
-  padding-left: 10px; /* Space between image and text */
-}
-
-h3 {
-  margin-top: 0; /* Remove margin on top of the heading */
-}
-
-.button-icon {
-  width: 20px; /* Set width for the icon */
-  height: 20px; /* Set height for the icon */
-  margin: 0px 20px; /* Space between the icon and the text */
-}
-
-.buttons-container {
-  display: flex;
-  gap: 5px; /* Adjust the space between buttons */
-  align-items: center;
-}
 
 @media (max-width: 768px) {
   .col-md-4, .col-md-6 {
@@ -54,6 +35,59 @@ h3 {
     flex-direction: column; /* Stack the image and text vertically on small screens */
     align-items: center; /* Center align the items */
   }
+}
+
+.text-container {
+  padding: 20px; /* Space around the entire text container */
+  display: flex;
+  flex-direction: column; /* Arrange the children in a column */
+  gap: 20px; /* Space between all elements inside the container */
+}
+
+h4 {
+  margin: 0; /* Remove default margin for h4 elements */
+  font-size: 18px; /* Adjust font size for headings */
+}
+
+.quantity-container {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between buttons and the quantity */
+}
+
+.quantity-button {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Disabled button styling */
+.quantity-button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Hover effect for buttons */
+.quantity-button:not([disabled]):hover {
+  background-color: #0056b3;
+}
+
+/* Quantity text styling */
+span {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Styling for the total amount */
+div h4 {
+  margin: 0;
+  font-size: 20px;
 }
 
 

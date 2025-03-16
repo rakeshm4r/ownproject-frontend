@@ -25,9 +25,9 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" >
   <!-- Loop through all orders -->
-  <ng-container *ngIf="filteredOrders.length > 0; else noOrders">
+  <ng-container *ngIf="filteredOrders.length > 0 && !loading">
     <div *ngFor="let order of filteredOrders">
       <div
         class="order-summary"
@@ -88,10 +88,14 @@
       </div>
     </div>
   </ng-container>
-  <ng-template #noOrders>
-    <div  style="text-align: center; font-weight: bold;">No Orders Available</div>
-  </ng-template>
+
 </div>
 <p-confirmPopup></p-confirmPopup>
+<div *ngIf="filteredOrders == null || filteredOrders.length === 0 && !loading" class="loading-message ">
+  You don't have any orders up to now.
+</div>
 
 
+<div *ngIf="loading" class="loading-message ">
+  <div class="loader"></div>
+</div>

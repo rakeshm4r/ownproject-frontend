@@ -21,11 +21,14 @@ export class ControlSettingComponent implements OnInit {
     this.getAllUsers()
   }
   users: User[] = [];  // Empty array to hold user data
+  loading :boolean =false;
 
   getAllUsers(): void {
+    this.loading = true
     this.credentialsService.getAllUsers().subscribe(
       (data) => {
         this.users = data;  // Bind the response data to the users array
+        this.loading = false
       },
       (error) => {
         console.error('Error fetching users:', error);  // Handle any errors

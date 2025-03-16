@@ -22,6 +22,7 @@ export class AdminOrdersTableComponent implements OnInit {
     'Delivered': 'delivered',
     'Not Delivered': 'notdelivered'
   };
+  loading :boolean =false;
   ngOnInit(): void {
 
   }
@@ -33,6 +34,7 @@ export class AdminOrdersTableComponent implements OnInit {
   }
 
   filterOrdersByStatus(status: string) {
+    this.loading = true
     const orderStatus = this.statusMapping[status];
     const encodedStatus = encodeURIComponent(orderStatus);
 
@@ -46,6 +48,7 @@ export class AdminOrdersTableComponent implements OnInit {
 
           return dateB.getTime() - dateA.getTime(); // descending order
         });
+        this.loading = false
       },
       (error) => {
         console.error('Error fetching orders', error);

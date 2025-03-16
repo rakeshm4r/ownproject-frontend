@@ -7,6 +7,7 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import autoTable from 'jspdf-autotable';
 import 'jspdf-autotable';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-my-orders',
@@ -103,6 +104,59 @@ export class MyOrdersComponent implements OnInit {
         return { 'color': 'black' }; // Default color
     }
   }
+  // downloadInvoice(order: any) {
+  //   const ordersStatusId = order.ordersStatusId
+    
+  //   this.razorPayService.getGeneratedInvoice(ordersStatusId).subscribe((response: BlobPart) => {
+  //     const blob = new Blob([response], { type: 'application/pdf' });
+  //     const url = window.URL.createObjectURL(blob);
+  //     const a = document.createElement('a');
+  //     a.href = url;
+  //     a.download = 'invoice.pdf';
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //   });
+  // }  
+  downloadInvoice(order: any) {
+    const ordersStatusId = order.ordersStatusId;
+    
+    this.razorPayService.getGeneratedInvoice(ordersStatusId).subscribe((response: HttpResponse<Blob>) => {
+      const blob = response.body; // The PDF file content
+  
+      // Check if blob is null
+      if (!blob) {
+        console.error('Failed to fetch the PDF, no data returned.');
+        return; // Early return if blob is null
+      }
+  
+      // Get the filename (invoice number) from the Content-Disposition header
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let filename = 'invoice.pdf'; // Default filename
+      if (contentDisposition) {
+        const matches = /filename="([^"]+)"/.exec(contentDisposition);
+        if (matches && matches[1]) {
+          filename = matches[1];
+        }
+      }
+  
+      // Create a URL for the blob and trigger the download
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename; // Dynamic filename based on the invoice number
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+  
+      // Optionally, revoke the object URL after use to free memory
+      window.URL.revokeObjectURL(url);
+    }, error => {
+      console.error('Error downloading invoice:', error);
+    });
+  }
+  
+
   generatePDF(order: any): void {
     const doc = new jsPDF();
   
@@ -198,7 +252,7 @@ export class MyOrdersComponent implements OnInit {
   //   // Invoice details
   //   doc.setFontSize(12);
   //   doc.setTextColor(0, 0, 0);
-  //   doc.text(`Invoice No: #${order.orderNumber}`, 15, 30);
+  //   doc.text(`Invoice No: #${order.invoiceNumber}`, 15, 30);
   //   doc.text(`Date: ${this.formatDate(order.bookedOrderdDate)}`, 150, 30);
   
   //   // Bill To & Ship To Section

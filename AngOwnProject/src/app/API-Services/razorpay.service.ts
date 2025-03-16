@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { AppContanstsService } from '../AppContants/app-contansts.service';
@@ -12,6 +12,7 @@ export class RazorpayService {
   private apiCreateOrderUrl: string;
   private apiSaveOrderPaymentUrl: string;
   private apiUserOrders :string;
+  private apiInvoice: string ;
   
     constructor(private http: HttpClient, private appConstants: AppContanstsService) {
       
@@ -19,7 +20,9 @@ export class RazorpayService {
 
       this.apiCreateOrderUrl = `${this.appConstants.API_ENDPOINT}api/orders`;
 
-       this.apiUserOrders = `${this.appConstants.API_ENDPOINT}api/orders/user`;
+      this.apiUserOrders = `${this.appConstants.API_ENDPOINT}api/orders/user`;
+
+      this.apiInvoice = `${this.appConstants.API_ENDPOINT}api/invoice`;
     }
 
     createOrder(oData: any): Observable<any> {    
@@ -81,6 +84,18 @@ export class RazorpayService {
     updateOrderStatus(orderStatusDetails: any): Observable<any> {
       const updateOrderStatusUrl = `${this.apiCreateOrderUrl}/updateOrderStatus`;      
       return this.http.post<any>(updateOrderStatusUrl, orderStatusDetails);
+    }
+    
+    // getGeneratedInvoice(orderStatusId: number): Observable<Blob> {
+    //   const url = `${this.apiInvoice}/${orderStatusId}`;
+    //   const headers = new HttpHeaders({ 'Accept': 'application/pdf' });
+    //   return this.http.get(url, { headers, responseType: 'blob' });
+    // }
+    getGeneratedInvoice(orderStatusId: number): Observable<HttpResponse<Blob>> {
+      const url = `${this.apiInvoice}/${orderStatusId}`;
+      const headers = new HttpHeaders({ 'Accept': 'application/pdf' });      
+      // Observe the full response to get headers
+      return this.http.get(url, { headers, observe: 'response', responseType: 'blob' });
     }
     
 }
