@@ -47,6 +47,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { AdminOrdersTableComponent } from './admin-orders-table/admin-orders-table.component';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
+
 @NgModule({
   declarations: [
     AppComponent,

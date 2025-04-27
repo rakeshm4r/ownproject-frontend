@@ -79,82 +79,84 @@ export class OrderComponent implements OnInit {
     }
  
 
-  pay(amount: number,productId:any,userProfile:any,quantity:any) {
-    const orderData ={
-      amount: amount,
-      productId: productId  
-    }
-  alert(quantity)
-    this.razorpayService.createOrder(orderData).subscribe(response => {
-      console.log("Received response: ", response);
-      if (response && response.razorpayOrderId && response.amount) {
-        // Pass the orderId and amount to the loadRazorpay function
-        this.loadRazorpay(response.razorpayOrderId,productId, response.amount,userProfile,quantity);
-      } else {
-        // Handle error or missing data from the backend response
-        console.error('Razorpay order creation failed: Invalid response', response);
-      }
-            });
-      }
-        
-      loadRazorpay(orderId: string, productId: any, amount: number, userProfile: any,quantity:any) {
-        if (typeof Razorpay === "undefined") {
-          console.error("Razorpay SDK not loaded properly");
-          return;
-        }
-      
-        const options = {
-          key: 'rzp_test_be4CL02hCvAVmA',  // Your Razorpay Key ID
-          amount: amount * 100,  // Convert to paise
-          currency: 'INR',
-          name: 'Your Company',
-          description: 'Product Purchase',
-          image: 'https://example.com/logo.png',
-          order_id: orderId,
-          handler: (response: any) => {  // Arrow function to bind `this`
-          //  console.log("Payment Response: ", response);
-      
-            const paymentDetails = {
-              userId: userProfile.userId,  // Ensure this is available in userProfile
-              productId: productId,  // You can pass product ID from the server if necessary
-              amount: amount,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature:response.razorpay_signature,
-              quantity: quantity , 
-            };
-      
-            // Call the saveOrderPaymentDetails method
-           this.saveOrderPaymentDetails(paymentDetails);  
-          
-          },
-          prefill: {
-            name: userProfile.userName,
-            email: userProfile.emailId,
-            contact: userProfile.mobileNo
-          }
-        };
-      
-        // Initialize Razorpay payment window
-        const razorpay = new Razorpay(options);
-        razorpay.open();
-      }
-      
-      countdown: number = 10; // Default countdown starts at 10
-      countdownTimer: any;
+    pay(amount: number, cartItems: any[], userProfile: any) {
+      const orderData = {
+        amount: amount,
+        products: cartItems.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity
+        }))
+      };
     
-      saveOrderPaymentDetails(paymentDetails: { userId: any; productId: any; amount: number; razorpay_payment_id: any; razorpay_order_id: any; quantity: any  }) {
-        this.razorpayService.saveOrderpaymentDetails(paymentDetails).subscribe(
-          (response: any) => {
-            if (response.message) {              
-              this.router.navigate(['/order-confirmation']);
-            }         
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
-          }
-        );
-      }
+      this.razorpayService.createOrder(orderData).subscribe(response => {
+        if (response && response.razorpayOrderId && response.amount) {
+          this.loadRazorpay(response.razorpayOrderId, cartItems, response.amount, userProfile);
+        } else {
+          console.error('Razorpay order creation failed:', response);
+        }
+      });
+    }
+    
+          
+    loadRazorpay(orderId: string, cartItems: any[], amount: number, userProfile: any) {
+      const options = {
+        key: 'rzp_test_be4CL02hCvAVmA',
+        amount: amount * 100,  // Razorpay expects paise
+        currency: 'INR',
+        name: 'Your Company',
+        description: 'Product Purchase',
+        image: 'https://example.com/logo.png',
+        order_id: orderId,
+        handler: (response: any) => {
+          const paymentDetails = {
+            userId: userProfile.userId,
+            products: cartItems.map(item => ({
+              productId: item.productId,
+              quantity: item.quantity
+            })),
+            amount: amount,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          };
+    
+          this.saveOrderPaymentDetails(paymentDetails);
+        },
+        prefill: {
+          name: userProfile.userName,
+          email: userProfile.emailId,
+          contact: userProfile.mobileNo
+        }
+      };
+    
+      const razorpay = new Razorpay(options);
+      razorpay.open();
+    }
+    
+        
+        countdown: number = 10; // Default countdown starts at 10
+        countdownTimer: any;
+      
+        saveOrderPaymentDetails(paymentDetails: { 
+          userId: any; 
+          products: { productId: number, quantity: number }[]; 
+          amount: number; 
+          razorpay_payment_id: string; 
+          razorpay_order_id: string; 
+          razorpay_signature: string;
+        }) { 
+          this.razorpayService.saveOrderpaymentDetails(paymentDetails).subscribe(
+            (response: any) => {
+              if (response.message) {              
+                this.router.navigate(['/order-confirmation']);
+              }         
+            },
+            error => {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
+            }
+          );
+        }
+        
       
 }
 

@@ -12,6 +12,9 @@ import { MessageService } from 'primeng/api';
 export class ShowProductDtlsComponent implements OnInit {
   selectedProduct: any;
   products: any[] = [];
+  isCartEmpty: boolean = false;
+    cartDetails: any[] = [];
+    loading :boolean =false;
   constructor(
     private route: ActivatedRoute, private router: Router,private messageService:MessageService,
     private productService: ProductService  ,private cartService:CartService
@@ -21,6 +24,7 @@ export class ShowProductDtlsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const productId = params.get('productName')!;
       this.getProductDetails(productId);
+      this. getCartDetsByUser(productId)
     });    
   }
 
@@ -62,4 +66,13 @@ export class ShowProductDtlsComponent implements OnInit {
     this.router.navigate(['/order-products', product.productName]); 
   }
 
+  getCartDetsByUser(productId:any){
+    this.loading = true
+    this.showBuyNow=false
+    this.cartService.getCartStatusByUser(productId).subscribe((cartData: any) => {
+      this.isCartEmpty = cartData
+      this.showBuyNow=true
+     this.loading = false
+    });
+  }
 }

@@ -4,48 +4,62 @@
 
 <div class="col-12 container-fluid">
   <div class="row">
-    <div class="col-1">
+    <div class="col-md-1">
 
     </div>
    
-    <div class="col-8">
+    <div class="col-md-8">
       <div class="row" style="margin: 20px 20px;">
         <div class="product-container" >
-          <div *ngIf="isCartEmpty && !loading; else cartList">
-            <p>Your cart is empty.</p>
+          <div class="loading-message" *ngIf="isCartEmpty && !loading; else cartList">
+            <p>Your Cart is Empty.</p>
           </div>
           
           <ng-template #cartList>
-          <div class="product-card" *ngFor="let product of cartDetails">
-            <div class="col-12 col-md-4">
-              <div class="image-container">
-                <img [src]="'data:image/webp;base64,' + product.productImageBase64"
-                  alt="{{ product.productName }} image" style="height: 100%; width: auto;">
+            <div class="product-card" *ngFor="let product of cartDetails">
+              <div class="col-12 col-md-4">
+                <div class="image-container">
+                  <img [src]="'data:image/webp;base64,' + product.productImageBase64"
+                    alt="{{ product.productName }} image" style="height: 100%; width: auto;">
+                </div>
+              </div>
+            
+              <div class="col-12 col-md-6">
+                <div class="text-container">
+                  <h3>{{ product.productName }}</h3>
+                  <p>Price: ₹{{ product.productPrice }}</p>
+            
+                  <div class="quantity-container">
+                    <button class="quantity-button" (click)="decreaseQuantity(product)" [disabled]="product.quantity <= 1">-</button>
+                    <span>{{ product.quantity }}</span>
+                    <button class="quantity-button" (click)="increaseQuantity(product)" [disabled]="product.quantity >= product.noOfItems">+</button>
+                  </div>
+            
+                  <h4>Total Amount: ₹ {{ product.totalAmount }}</h4>
+                </div>
+              </div>
+            
+              <div class="col-12 col-md-2 position-relative">
+                <button class="rk-btn delete-btn" (click)="removeProduct(product.cartId)">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
               </div>
             </div>
-            <div class="col-12 col-md-6">
-              <div class="text-container">
-                <h3>{{ product.productName }}</h3>
-                <p>Price: ₹{{ product.productPrice }}</p>                             
-                <div class="buttons-container">
-                <button class="rk-btn" (click)="removeProduct(product.cartId)">Remove
-                 
-                  <img src="assets/cart-shopping-fast.png" alt="Cart Icon" class="button-icon">
-                </button>               
-              </div>
-              </div>
-            </div>
-          </div>
+            
           </ng-template>
         </div>
       </div>  
     </div>
-    <div class="col-3">
+    <div class="col-md-3">
       <div class="row" style="margin: 20px 20px;">
       <div *ngIf="cartDetails.length > 0" class="total-price-container">
         <h4>Total Items: {{ cartDetails.length }}</h4>
         <h4>Total Price: ₹{{ getTotalPrice() }}</h4>
+        <div style="width: 50%;">
+          <button (click)="pay(getTotalPrice(), cartDetails, userProfile)" class="rk-btn">Pay ₹{{ getTotalPrice() }}</button>
+        </div>
       </div>
+    </div>    
     </div>
-    </div>
+  </div>
 </div>

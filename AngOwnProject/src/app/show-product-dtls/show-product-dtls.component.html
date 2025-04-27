@@ -30,11 +30,13 @@
                 <div class="buttons-container">
                   <!-- Conditionally render buttons based on noOfItems -->
                   <ng-container *ngIf="product.noOfItems > 0; else outOfStockButtons">
+
                     <button class="rk-btn" (click)="showBuyNow ? buyNow(product) : onProductClick(product)">
                       {{ showBuyNow ? 'Buy Now' : 'Add to Cart' }}
                       <img src="assets/cart-shopping-fast.png" alt="Cart Icon" class="button-icon">
                     </button>
-                    <button class="rk-btn" routerLink="/showCart" *ngIf="showBuyNow">Go to Cart</button>
+                    <button class="rk-btn" routerLink="/showCart" *ngIf="isCartEmpty && showBuyNow">Go to Cart</button>
+                    
                   </ng-container>
                 
                   <!-- If noOfItems == 0, show "Out of stock" message -->

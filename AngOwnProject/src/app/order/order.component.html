@@ -47,7 +47,8 @@
                   <h4>Total Amount: ₹ {{ totalAmount }}</h4>
                 
                   <div style="width: 50%;">
-                    <button (click)="pay(totalAmount,product.productId,userProfile,quantity)" class="rk-btn">Pay</button>   
+
+                    <button (click)="pay(totalAmount, products, userProfile)" class="rk-btn">Pay ₹{{ totalAmount }}</button> 
                   </div>
                 
               </div>

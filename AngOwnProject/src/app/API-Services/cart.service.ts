@@ -31,4 +31,9 @@ export class CartService {
       return this.http.post<any>(removeProductFromCartUrl,cartId);
     }
 
+    getCartStatusByUser(productId: any): Observable<any> {
+      const url = `${this.apiUrl}/getCartStatus`;
+      return this.http.post<any>(url, productId); // Send productId in the body
+    }
+    
 }
